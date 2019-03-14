@@ -32,7 +32,7 @@
                   <Insets />
                </VBox.margin>
             </JFXButton>
-            <JFXButton prefHeight="125.0" prefWidth="181.0" text="Assignatures" textFill="WHITE">
+            <JFXButton onAction="#changeToAssignaturesScene" prefHeight="125.0" prefWidth="181.0" text="Assignatures" textFill="WHITE">
                <font>
                   <Font size="17.0" />
                </font>

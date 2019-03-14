@@ -9,7 +9,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane prefHeight="490.0" prefWidth="861.0" style="-fx-background-color: #222831;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="App.afegirAlumnesController">
+<BorderPane prefHeight="490.0" prefWidth="861.0" style="-fx-background-color: #222831;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="App.afegirProfessorsController">
    <left>
       <VBox prefHeight="444.0" prefWidth="181.0" style="-fx-background-color: #393e46;" BorderPane.alignment="CENTER">
          <children>
@@ -21,7 +21,7 @@
                   <Insets />
                </VBox.margin>
             </JFXButton>
-            <JFXButton onAction="#changeToProfessorsScene" prefHeight="117.0" prefWidth="181.0" text="Professors" textFill="WHITE">
+            <JFXButton onAction="#changeToListProfessors" prefHeight="117.0" prefWidth="181.0" text="Professors" textFill="WHITE">
                <font>
                   <Font size="17.0" />
                </font>
@@ -29,7 +29,7 @@
                   <Insets />
                </VBox.margin>
             </JFXButton>
-            <JFXButton prefHeight="125.0" prefWidth="181.0" text="Assignatures" textFill="WHITE">
+            <JFXButton onAction="#changeToListAssignatures" prefHeight="125.0" prefWidth="181.0" text="Assignatures" textFill="WHITE">
                <font>
                   <Font size="17.0" />
                </font>
@@ -81,12 +81,12 @@
                   <Insets left="20.0" top="20.0" />
                </VBox.margin>
             </Text>
-            <JFXTextField fx:id="dni" focusColor="#00adb5" prefHeight="25.0" prefWidth="237.0" style="-fx-max-width: 250; -fx-text-inner-color: white;" unFocusColor="WHITE">
+            <JFXTextField fx:id="departament" focusColor="#00adb5" prefHeight="25.0" prefWidth="237.0" style="-fx-max-width: 250; -fx-text-inner-color: white;" unFocusColor="WHITE">
                <VBox.margin>
                   <Insets left="20.0" top="10.0" />
                </VBox.margin>
             </JFXTextField>
-            <JFXButton onAction="#afegirAlumne" prefHeight="51.0" prefWidth="254.0" style="-fx-background-color: #00adb5;" text="Afegir" textFill="WHITE">
+            <JFXButton onAction="#afegirProfessors" prefHeight="51.0" prefWidth="254.0" style="-fx-background-color: #00adb5;" text="Afegir" textFill="WHITE">
                <font>
                   <Font size="16.0" />
                </font>

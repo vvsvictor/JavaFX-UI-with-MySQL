@@ -87,6 +87,14 @@ public class sceneAlumnesController implements Initializable {
         window.show();
     }
     
+     public void changeToAssignaturesScene(ActionEvent event) throws IOException{
+        Parent professors = FXMLLoader.load(getClass().getResource("llistaAssignatures.fxml"));
+        Scene professorsScene = new Scene(professors, 1000, 700);
+        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+        window.setScene(professorsScene);
+        window.show();
+    }
+    
     
 
 }

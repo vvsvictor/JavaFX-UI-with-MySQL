@@ -1,5 +1,6 @@
 package Database;
 
+import Classes.Assignatura;
 import Classes.Professor;
 import java.sql.*;
 import java.util.ArrayList;
@@ -239,6 +240,65 @@ public class basedades {
 
     }
     
+    public static List obtenirAssignatures() {
+        List llistaAssignatures = new ArrayList();
+        Connection conn = null;
+        Statement stmt = null;
+        try {
+            //STEP 2: Register JDBC driver
+            Class.forName("com.mysql.jdbc.Driver");
+
+            //STEP 3: Open a connection
+            System.out.println("Connecting to a selected database...");
+            conn = DriverManager.getConnection(DB_URL, USER, PASS);
+            System.out.println("Connected database successfully...");
+
+            //STEP 4: Execute a query
+            System.out.println("Creating statement...");
+            stmt = conn.createStatement();
+            String usesql = "USE DBClass";
+            stmt.executeUpdate(usesql);
+            String sql = "SELECT id, nom, credits, descripcio FROM assignatura";
+            ResultSet rs = stmt.executeQuery(sql);
+            //STEP 5: Extract data from result set
+            while (rs.next()) {
+                String id = rs.getInt("id")+"";
+                String nom = rs.getString("nom");
+                String credits = rs.getString("credits");
+                String descripcio = rs.getString("descripcio");
+                
+                Assignatura assignatura = new Assignatura(nom, credits, descripcio,id);
+
+                llistaAssignatures.add(assignatura);
+            }
+            rs.close();
+        } catch (SQLException se) {
+            //Handle errors for JDBC
+            se.printStackTrace();
+        } catch (Exception e) {
+            //Handle errors for Class.forName
+            e.printStackTrace();
+        } finally {
+            //finally block used to close resources
+            try {
+                if (stmt != null) {
+                    conn.close();
+                }
+            } catch (SQLException se) {
+            }// do nothing
+            try {
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }//end finally try
+        }//end try      
+
+        return llistaAssignatures;
+
+    }
+    
     public static List obtenirProfessors() {
         List llistaEstudiants = new ArrayList();
         Connection conn = null;
@@ -303,11 +363,11 @@ public class basedades {
     }
 
     public static void afegirAssignatura(String nom, String credits, String descripcio) {
-        executarQuery("INSERT INTO assignatura (nom, credits, descripcio) VALUES ('" + nom + "','" + credits + "','" + descripcio + "'");
+        executarQuery("INSERT INTO assignatura (nom, credits, descripcio) VALUES ('" + nom + "'," + credits + ",'" + descripcio + "')");
     }
 
     public static void afegirProfessor(String nom, String departament) {
-        executarQuery("INSERT INTO professor (nom, departament) VALUES ('" + nom + "','" + departament + "'");
+        executarQuery("INSERT INTO professor (nom, departament) VALUES ('" + nom + "','" + departament + "')");
     }
 
     public static void main(String[] args) {

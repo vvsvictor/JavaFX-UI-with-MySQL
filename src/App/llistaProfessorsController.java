@@ -61,5 +61,20 @@ public class llistaProfessorsController implements Initializable {
         window.setScene(alumnesScene);
         window.show();
     }
+       public void changeToafegirProfessors(ActionEvent event) throws IOException{
+        Parent afegirAlumne = FXMLLoader.load(getClass().getResource("afegirProfessors.fxml"));
+        Scene afegirAlumneScene = new Scene(afegirAlumne, 1000, 700);
+        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+        window.setScene(afegirAlumneScene);
+        window.show();
+    }
+       
+        public void changeToAssignaturesScene(ActionEvent event) throws IOException{
+        Parent alumnes = FXMLLoader.load(getClass().getResource("llistaAssignatures.fxml"));
+        Scene alumnesScene = new Scene(alumnes, 1000, 700);
+        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+        window.setScene(alumnesScene);
+        window.show();
+    }
 
 }
