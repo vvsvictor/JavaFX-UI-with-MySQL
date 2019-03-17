@@ -20,6 +20,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 /**
@@ -71,8 +72,18 @@ public class afegirAssignaturesController implements Initializable {
                     credits.validate();
                 }
             }
+            
         });
 
+    }
+    
+    private boolean isInt(TextField input){
+        try {
+            int credits = Integer.parseInt(input.getText());
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
     }
 
     public void changeToListAlumnes(ActionEvent event) throws IOException {

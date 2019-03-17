@@ -1,0 +1,5 @@
+estudiant --> -matriculacions <--Assignatures
+
+-Assignacions
+
+estudiant --> -Avaluacions
