@@ -9,7 +9,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane prefHeight="490.0" prefWidth="861.0" style="-fx-background-color: #222831;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="App.afegirProfessorsController">
+<BorderPane prefHeight="490.0" prefWidth="861.0" style="-fx-background-color: #222831;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="App.afegirAssignaturesController">
    <left>
       <VBox prefHeight="444.0" prefWidth="181.0" style="-fx-background-color: #393e46;" BorderPane.alignment="CENTER">
          <children>
@@ -41,7 +41,7 @@
       </VBox>
    </left>
    <top>
-      <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Afegir Professor" wrappingWidth="202.9831027984619" BorderPane.alignment="CENTER">
+      <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Afegir Assignatura" textAlignment="CENTER" wrappingWidth="286.9831027984619" BorderPane.alignment="CENTER">
          <font>
             <Font size="27.0" />
          </font>
@@ -60,7 +60,7 @@
    <center>
       <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
-            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Nom i Cognoms" wrappingWidth="243.490234375">
+            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Nom" wrappingWidth="243.490234375">
                <font>
                   <Font size="23.0" />
                </font>
@@ -73,7 +73,7 @@
                   <Insets left="20.0" top="20.0" />
                </VBox.margin>
             </JFXTextField>
-            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Departament" wrappingWidth="243.490234375">
+            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Credits" wrappingWidth="243.490234375">
                <font>
                   <Font size="23.0" />
                </font>
@@ -82,6 +82,19 @@
                </VBox.margin>
             </Text>
             <JFXTextField fx:id="departament" focusColor="#00adb5" prefHeight="25.0" prefWidth="237.0" style="-fx-max-width: 250; -fx-text-inner-color: white;" unFocusColor="WHITE">
+               <VBox.margin>
+                  <Insets left="20.0" top="10.0" />
+               </VBox.margin>
+            </JFXTextField>
+            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Descripcio" wrappingWidth="243.490234375">
+               <font>
+                  <Font size="23.0" />
+               </font>
+               <VBox.margin>
+                  <Insets left="20.0" top="10.0" />
+               </VBox.margin>
+            </Text>
+            <JFXTextField fx:id="departament1" focusColor="#00adb5" prefHeight="25.0" prefWidth="237.0" style="-fx-max-width: 250; -fx-text-inner-color: white;" unFocusColor="WHITE">
                <VBox.margin>
                   <Insets left="20.0" top="10.0" />
                </VBox.margin>

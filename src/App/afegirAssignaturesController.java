@@ -7,6 +7,7 @@ package App;
 
 import static Database.basedades.afegirAssignatura;
 import com.jfoenix.controls.JFXTextField;
+import com.jfoenix.validation.NumberValidator;
 import com.jfoenix.validation.RequiredFieldValidator;
 import java.io.IOException;
 import java.net.URL;
@@ -33,17 +34,22 @@ public class afegirAssignaturesController implements Initializable {
     private JFXTextField nom;
 
     @FXML
-    private JFXTextField descripcio;
+    private JFXTextField credits;
 
     @FXML
-    private JFXTextField credits;
+    private JFXTextField descripcio;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        NumberValidator numberValid = new NumberValidator();
+        numberValid.setMessage("El valor introduït no és correcte");
+        
+
         RequiredFieldValidator validator = new RequiredFieldValidator();
 
         nom.getValidators().add(validator);
         descripcio.getValidators().add(validator);
+        credits.getValidators().add(numberValid);
         credits.getValidators().add(validator);
         validator.setMessage("Falten valors d'entrada");
 
@@ -70,14 +76,14 @@ public class afegirAssignaturesController implements Initializable {
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldVAlue, Boolean newValue) {
                 if (!newValue) {
                     credits.validate();
-                }
+                } 
             }
-            
+
         });
 
     }
-    
-    private boolean isInt(TextField input){
+
+    private boolean isInt(TextField input) {
         try {
             int credits = Integer.parseInt(input.getText());
             return true;
@@ -101,7 +107,7 @@ public class afegirAssignaturesController implements Initializable {
         window.setScene(afegirAlumneScene);
         window.show();
     }
-    
+
     public void changeToListAssignatures(ActionEvent event) throws IOException {
         Parent llistaAlumnes = FXMLLoader.load(getClass().getResource("llistaAssignatures.fxml"));
         Scene afegirAlumneScene = new Scene(llistaAlumnes, 1000, 700);
