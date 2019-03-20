@@ -1,6 +1,7 @@
 package App;
 
 import static Database.basedades.afegirProfessor;
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.validation.RequiredFieldValidator;
 import java.io.IOException;
@@ -25,8 +26,12 @@ public class afegirProfessorsController implements Initializable {
     @FXML
     private JFXTextField departament;
 
+    @FXML
+    private JFXButton afegirProfessorsBtn;
+    
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        afegirProfessorsBtn.setDisable(true);
         RequiredFieldValidator validator = new RequiredFieldValidator();
 
         nomicognoms.getValidators().add(validator);
@@ -51,6 +56,20 @@ public class afegirProfessorsController implements Initializable {
             }
         });
 
+    }
+    
+    public void inputValidator(){
+        nomicognoms.validate();
+        departament.validate();
+        String sNomicognoms = nomicognoms.getText();
+        String sDepartament = departament.getText();
+        boolean correctInput;
+        correctInput= !(sNomicognoms.isEmpty() || sDepartament.isEmpty());
+        if (correctInput) {
+            afegirProfessorsBtn.setDisable(false);
+        }else{
+            afegirProfessorsBtn.setDisable(true);
+        }
     }
 
     public void changeToListAlumnes(ActionEvent event) throws IOException {
