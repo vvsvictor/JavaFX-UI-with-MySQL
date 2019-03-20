@@ -1,5 +1,5 @@
-estudiant --> -matriculacions <--Assignatures
+estudiant --> -matriculacions <--Assignatures (Selecionar de llista)
 
--Assignacions
+-Assignacions (asignar assignatura a professor a un any en concret)
 
-estudiant --> -Avaluacions
+estudiant, assignatures i nota--> -Avaluacions

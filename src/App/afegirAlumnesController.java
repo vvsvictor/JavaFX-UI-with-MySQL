@@ -6,6 +6,7 @@
 package App;
 
 import static Database.basedades.*;
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.validation.RequiredFieldValidator;
 import java.io.IOException;
@@ -29,6 +30,9 @@ import javafx.stage.Stage;
 public class afegirAlumnesController implements Initializable {
 
     @FXML
+    private JFXButton afegirAlumneBtn;
+
+    @FXML
     private JFXTextField nomicognoms;
 
     @FXML
@@ -39,8 +43,9 @@ public class afegirAlumnesController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        afegirAlumneBtn.setDisable(true);
         RequiredFieldValidator validator = new RequiredFieldValidator();
-        
+
         nomicognoms.getValidators().add(validator);
         dni.getValidators().add(validator);
         adreca.getValidators().add(validator);
@@ -49,30 +54,39 @@ public class afegirAlumnesController implements Initializable {
         nomicognoms.focusedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldVAlue, Boolean newValue) {
+                if (correctInput()) {
+                    afegirAlumneBtn.setDisable(false);
+                }
                 if (!newValue) {
                     nomicognoms.validate();
                 }
             }
         });
-        
+
         dni.focusedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldVAlue, Boolean newValue) {
+                if (correctInput()) {
+                    afegirAlumneBtn.setDisable(false);
+                }
                 if (!newValue) {
                     dni.validate();
                 }
             }
         });
-        
+
         adreca.focusedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldVAlue, Boolean newValue) {
+                if (correctInput()) {
+                    afegirAlumneBtn.setDisable(false);
+                }
                 if (!newValue) {
                     adreca.validate();
                 }
             }
         });
-        
+
     }
 
     public void changeToListAlumnes(ActionEvent event) throws IOException {
@@ -82,8 +96,27 @@ public class afegirAlumnesController implements Initializable {
         window.setScene(afegirAlumneScene);
         window.show();
     }
+
+    public boolean correctInput() {
+        String sNomicognoms = nomicognoms.getText();
+        String sDNI = dni.getText();
+        String sAdreca = adreca.getText();
+        return !(sNomicognoms.isEmpty() || sDNI.isEmpty() || sAdreca.isEmpty());
+    }
     
-    public void afegirAlumne(ActionEvent event) throws IOException{
+    public void correctInputValidator(){
+        adreca.validate();
+        nomicognoms.validate();
+        dni.validate();
+        if (correctInput()) {
+            afegirAlumneBtn.setDisable(false);
+        }else{
+            afegirAlumneBtn.setDisable(true);
+        }
+    }
+
+    public void afegirAlumne(ActionEvent event) throws IOException {
+
         String sNomicognoms = nomicognoms.getText();
         String sDNI = dni.getText();
         String sAdreca = adreca.getText();
@@ -93,12 +126,13 @@ public class afegirAlumnesController implements Initializable {
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(afegirAlumneScene);
         window.show();
-    
+
     }
-    public void changeToProfessorsScene(ActionEvent event) throws IOException{
+
+    public void changeToProfessorsScene(ActionEvent event) throws IOException {
         Parent professors = FXMLLoader.load(getClass().getResource("llistaProfessors.fxml"));
         Scene professorsScene = new Scene(professors, 1000, 700);
-        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(professorsScene);
         window.show();
     }

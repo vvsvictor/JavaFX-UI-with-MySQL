@@ -6,6 +6,7 @@
 package App;
 
 import static Database.basedades.afegirAssignatura;
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.validation.NumberValidator;
 import com.jfoenix.validation.RequiredFieldValidator;
@@ -39,19 +40,21 @@ public class afegirAssignaturesController implements Initializable {
     @FXML
     private JFXTextField descripcio;
 
+    @FXML
+    private JFXButton afegirAssignaturaBtn;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        afegirAssignaturaBtn.setDisable(true);
         NumberValidator numberValid = new NumberValidator();
         numberValid.setMessage("El valor introduït no és correcte");
-        
 
         RequiredFieldValidator validator = new RequiredFieldValidator();
-
+        validator.setMessage("Falten valors d'entrada");
         nom.getValidators().add(validator);
         descripcio.getValidators().add(validator);
         credits.getValidators().add(numberValid);
         credits.getValidators().add(validator);
-        validator.setMessage("Falten valors d'entrada");
 
         nom.focusedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
@@ -61,7 +64,7 @@ public class afegirAssignaturesController implements Initializable {
                 }
             }
         });
-
+//
         descripcio.focusedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldVAlue, Boolean newValue) {
@@ -76,11 +79,21 @@ public class afegirAssignaturesController implements Initializable {
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldVAlue, Boolean newValue) {
                 if (!newValue) {
                     credits.validate();
-                } 
+                }
             }
 
         });
+    }
 
+    public void validateInput() {
+        String sNom = nom.getText();
+        String sDescripcio = descripcio.getText();
+        String sCredits = credits.getText();
+        if ((!isInt(credits)) || sCredits.isEmpty() || sDescripcio.isEmpty() || sNom.isEmpty()) {
+            afegirAssignaturaBtn.setDisable(true);
+        } else {
+            afegirAssignaturaBtn.setDisable(false);
+        }
     }
 
     private boolean isInt(TextField input) {
