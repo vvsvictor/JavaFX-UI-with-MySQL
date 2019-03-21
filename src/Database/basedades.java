@@ -1,5 +1,6 @@
 package Database;
 
+import Classes.Assignacio;
 import Classes.Assignatura;
 import Classes.Avaluacio;
 import Classes.Professor;
@@ -237,6 +238,64 @@ public class basedades {
         }//end try      
 
         return llistaEstudiants;
+
+    }
+
+    public static List obtenirAssignacions() {
+        List llistaAssignacions = new ArrayList();
+        Connection conn = null;
+        Statement stmt = null;
+        try {
+            //STEP 2: Register JDBC driver
+            Class.forName("com.mysql.jdbc.Driver");
+
+            //STEP 3: Open a connection
+            System.out.println("Connecting to a selected database...");
+            conn = DriverManager.getConnection(DB_URL, USER, PASS);
+            System.out.println("Connected database successfully...");
+
+            //STEP 4: Execute a query
+            System.out.println("Creating statement...");
+            stmt = conn.createStatement();
+            String usesql = "USE DBClass";
+            stmt.executeUpdate(usesql);
+            String sql = "SELECT c.id, c.any, p.nom as professor, a.nom as assignatura FROM curs c, professor p, assignatura a WHERE c.id_professor = p.id and c.id_assignatura = a.id";
+            ResultSet rs = stmt.executeQuery(sql);
+            //STEP 5: Extract data from result set
+            while (rs.next()) {
+                String id = rs.getInt("id") + "";
+                String any = rs.getString("any");
+                String professor = rs.getString("professor");
+                String assignatura = rs.getString("assignatura");
+                Assignacio assignacio = new Assignacio(id, any, professor, assignatura);
+
+                llistaAssignacions.add(assignacio);
+            }
+            rs.close();
+        } catch (SQLException se) {
+            //Handle errors for JDBC
+            se.printStackTrace();
+        } catch (Exception e) {
+            //Handle errors for Class.forName
+            e.printStackTrace();
+        } finally {
+            //finally block used to close resources
+            try {
+                if (stmt != null) {
+                    conn.close();
+                }
+            } catch (SQLException se) {
+            }// do nothing
+            try {
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }//end finally try
+        }//end try      
+
+        return llistaAssignacions;
 
     }
 

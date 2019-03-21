@@ -66,10 +66,11 @@
    <center>
       <TableView fx:id="tableView" prefHeight="398.0" prefWidth="849.0" style="-fx-pref-width: 2000;" BorderPane.alignment="CENTER">
         <columns>
-            <TableColumn fx:id="idMatriculacio" prefWidth="170.0" text="Estudiant" />
-          <TableColumn fx:id="nomAssignatura" prefWidth="159.0" text="Assignatura" />
-            <TableColumn fx:id="curs" prefWidth="111.0" text="Curs" />
-            <TableColumn fx:id="nota" prefWidth="127.0" text="Nota" />
+            <TableColumn fx:id="idAvaluacio" prefWidth="70.0" text="ID" />
+            <TableColumn fx:id="estudiantAvaluacio" prefWidth="162.0" text="Estudiant" />
+          <TableColumn fx:id="assignaturaAvaluacio" prefWidth="144.0" text="Assignatura" />
+            <TableColumn fx:id="anyAvaluacio" prefWidth="93.0" text="Curs" />
+            <TableColumn fx:id="notaAvaluacio" prefWidth="98.0" text="Nota" />
         </columns>
       </TableView>
    </center>

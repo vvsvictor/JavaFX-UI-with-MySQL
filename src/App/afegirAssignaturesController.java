@@ -113,6 +113,21 @@ public class afegirAssignaturesController implements Initializable {
         window.show();
     }
 
+    
+
+    public void afegirAssignatures(ActionEvent event) throws IOException {
+        String sNom = nom.getText();
+        String sDescripcio = descripcio.getText();
+        String sCredits = credits.getText();
+        afegirAssignatura(sNom, sCredits, sDescripcio);
+        Parent llistaAlumnes = FXMLLoader.load(getClass().getResource("llistaAssignatures.fxml"));
+        Scene afegirAlumneScene = new Scene(llistaAlumnes, 1000, 700);
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        window.setScene(afegirAlumneScene);
+        window.show();
+
+    }
+
     public void changeToListProfessors(ActionEvent event) throws IOException {
         Parent llistaAlumnes = FXMLLoader.load(getClass().getResource("llistaProfessors.fxml"));
         Scene afegirAlumneScene = new Scene(llistaAlumnes, 1000, 700);
@@ -128,20 +143,7 @@ public class afegirAssignaturesController implements Initializable {
         window.setScene(afegirAlumneScene);
         window.show();
     }
-
-    public void afegirAssignatures(ActionEvent event) throws IOException {
-        String sNom = nom.getText();
-        String sDescripcio = descripcio.getText();
-        String sCredits = credits.getText();
-        afegirAssignatura(sNom, sCredits, sDescripcio);
-        Parent llistaAlumnes = FXMLLoader.load(getClass().getResource("llistaAssignatures.fxml"));
-        Scene afegirAlumneScene = new Scene(llistaAlumnes, 1000, 700);
-        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        window.setScene(afegirAlumneScene);
-        window.show();
-
-    }
-
+    
     public void changeToAvaluacionsScene(ActionEvent event) throws IOException {
         Parent professors = FXMLLoader.load(getClass().getResource("llistaAvaluacions.fxml"));
         Scene professorsScene = new Scene(professors, 1000, 700);

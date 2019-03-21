@@ -12,7 +12,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane prefHeight="490.0" prefWidth="861.0" style="-fx-background-color: #222831;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="App.llistaNotesController">
+<BorderPane prefHeight="490.0" prefWidth="861.0" style="-fx-background-color: #222831;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="App.llistaAssignacionsController">
    <left>
       <VBox prefHeight="444.0" prefWidth="181.0" style="-fx-background-color: #393e46;" BorderPane.alignment="CENTER">
          <children>
@@ -24,7 +24,7 @@
                   <Insets />
                </VBox.margin>
             </JFXButton>
-            <JFXButton prefHeight="80.0" prefWidth="181.0" text="Professors" textFill="WHITE">
+            <JFXButton onAction="#changeToProfessorsScene" prefHeight="80.0" prefWidth="181.0" text="Professors" textFill="WHITE">
                <font>
                   <Font size="17.0" />
                </font>
@@ -32,7 +32,7 @@
                   <Insets />
                </VBox.margin>
             </JFXButton>
-            <JFXButton prefHeight="80.0" prefWidth="181.0" text="Assignatures" textFill="WHITE">
+            <JFXButton onAction="#changeToAssignaturesScene" prefHeight="80.0" prefWidth="181.0" text="Assignatures" textFill="WHITE">
                <font>
                   <Font size="17.0" />
                </font>
@@ -40,7 +40,7 @@
                   <Insets />
                </VBox.margin>
             </JFXButton>
-            <JFXButton prefHeight="80.0" prefWidth="181.0" text="Avaluacions" textFill="WHITE">
+            <JFXButton onAction="#changeToAvaluacionsScene" prefHeight="80.0" prefWidth="181.0" text="Avaluacions" textFill="WHITE">
                <font>
                   <Font size="17.0" />
                </font>
@@ -54,7 +54,7 @@
       </VBox>
    </left>
    <top>
-      <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Avaluacions" textAlignment="CENTER" wrappingWidth="247.9831027984619" BorderPane.alignment="CENTER">
+      <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Assignacions" textAlignment="CENTER" wrappingWidth="247.9831027984619" BorderPane.alignment="CENTER">
          <font>
             <Font size="27.0" />
          </font>
@@ -66,10 +66,10 @@
    <center>
       <TableView fx:id="tableView" prefHeight="398.0" prefWidth="849.0" style="-fx-pref-width: 2000;" BorderPane.alignment="CENTER">
         <columns>
-            <TableColumn fx:id="idMatriculacio" prefWidth="170.0" text="Estudiant" />
-          <TableColumn fx:id="nomAssignatura" prefWidth="159.0" text="Assignatura" />
-            <TableColumn fx:id="curs" prefWidth="111.0" text="Curs" />
-            <TableColumn fx:id="nota" prefWidth="127.0" text="Nota" />
+            <TableColumn fx:id="idAssignacio" prefWidth="92.0" text="Id" />
+          <TableColumn fx:id="anyAssignacio" prefWidth="109.0" text="Any" />
+            <TableColumn fx:id="nom_professor" prefWidth="197.0" text="Professor" />
+            <TableColumn fx:id="nom_assignatura" prefWidth="169.0" text="Assignatura" />
         </columns>
       </TableView>
    </center>

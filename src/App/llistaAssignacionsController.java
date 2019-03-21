@@ -5,7 +5,8 @@
  */
 package App;
 
-import Classes.Avaluacio;
+import Classes.Assignacio;
+import Classes.Assignatura;
 import Database.basedades;
 import java.io.IOException;
 import java.net.URL;
@@ -29,44 +30,43 @@ import javafx.stage.Stage;
  *
  * @author Víctor
  */
-public class llistaAvaluacionsController implements Initializable {
+public class llistaAssignacionsController implements Initializable {
 
     @FXML
-    private TableView<Avaluacio> tableView;
+    private TableView<Assignatura> tableView;
     @FXML
-    private TableColumn<Avaluacio, String> idAvaluacio;
+    private TableColumn<Assignatura, String> idAssignacio;
     @FXML
-    private TableColumn<Avaluacio, String> assignaturaAvaluacio;
+    private TableColumn<Assignatura, String> anyAssignacio;
     @FXML
-    private TableColumn<Avaluacio, String> estudiantAvaluacio;
-    
+    private TableColumn<Assignatura, String> nom_professor;
+
     @FXML
-    private TableColumn<Avaluacio, String> notaAvaluacio;
-    @FXML
-    private TableColumn<Avaluacio, String> anyAvaluacio;
+    private TableColumn<Assignatura, String> nom_assignatura;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         //Set uop the columns in the table
-        idAvaluacio.setCellValueFactory(new PropertyValueFactory<>("id"));
-        estudiantAvaluacio.setCellValueFactory(new PropertyValueFactory<>("estudiant"));
-        assignaturaAvaluacio.setCellValueFactory(new PropertyValueFactory<>("assignatura"));
-        notaAvaluacio.setCellValueFactory(new PropertyValueFactory<>("nota"));
-        anyAvaluacio.setCellValueFactory(new PropertyValueFactory<>("any"));
+        idAssignacio.setCellValueFactory(new PropertyValueFactory<>("id"));
+        anyAssignacio.setCellValueFactory(new PropertyValueFactory<>("any"));
+        //TODO verificacion de creditos a int
+        nom_professor.setCellValueFactory(new PropertyValueFactory<>("id_professor"));
+        nom_assignatura.setCellValueFactory(new PropertyValueFactory<>("id_Assignatura"));
+
         //Load data
-        tableView.setItems(getNotes());
+        tableView.setItems(getAssignacions());
     }
 
-    public ObservableList getNotes() {
-        ObservableList<Avaluacio> avaluacions = FXCollections.observableArrayList();
-        List llistaAvaluacions = basedades.obtenirAvaluacions();
-        for (int i = 0; i < llistaAvaluacions.size(); i++) {
-            //Array amb les dades del professor
-            Avaluacio avaluacio = (Avaluacio) llistaAvaluacions.get(i);
-            avaluacions.add(avaluacio);
+    public ObservableList getAssignacions() {
+        ObservableList<Assignacio> assignacions = FXCollections.observableArrayList();
+        List llistaAssignacions = basedades.obtenirAssignacions();
+        for (int i = 0; i < llistaAssignacions.size(); i++) {
+            //Array amb objectes assignacions
+            Assignacio assignacio = (Assignacio) llistaAssignacions.get(i);
+            assignacions.add(assignacio);
         }
 
-        return avaluacions;
+        return assignacions;
     }
 
     public void changeToAlumnesScene(ActionEvent event) throws IOException {
@@ -93,6 +93,14 @@ public class llistaAvaluacionsController implements Initializable {
         window.show();
     }
 
+    public void changeToAvaluacionsScene(ActionEvent event) throws IOException {
+        Parent professors = FXMLLoader.load(getClass().getResource("llistaAvaluacions.fxml"));
+        Scene professorsScene = new Scene(professors, 1000, 700);
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        window.setScene(professorsScene);
+        window.show();
+    }
+
     public void changeToAssignacionsScene(ActionEvent event) throws IOException {
         Parent professors = FXMLLoader.load(getClass().getResource("llistaAssignacions.fxml"));
         Scene professorsScene = new Scene(professors, 1000, 700);
@@ -100,5 +108,4 @@ public class llistaAvaluacionsController implements Initializable {
         window.setScene(professorsScene);
         window.show();
     }
-
 }
