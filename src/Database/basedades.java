@@ -1,13 +1,13 @@
 package Database;
 
 import Classes.Assignatura;
+import Classes.Avaluacio;
 import Classes.Professor;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class basedades {
-    
 
     // JDBC driver name and database URL
     static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
@@ -171,7 +171,7 @@ public class basedades {
     }
 
     public static void afegirEstudiant(String nom, String dni, String adreca) {
- 
+
         executarQuery("INSERT INTO estudiant (nom, dni, adreca) VALUES ('" + nom + "','" + dni + "','" + adreca + "')");
     }
 
@@ -239,7 +239,67 @@ public class basedades {
         return llistaEstudiants;
 
     }
-    
+
+    public static List obtenirAvaluacions() {
+        List llistaAssignatures = new ArrayList();
+        Connection conn = null;
+        Statement stmt = null;
+        try {
+            //STEP 2: Register JDBC driver
+            Class.forName("com.mysql.jdbc.Driver");
+
+            //STEP 3: Open a connection
+            System.out.println("Connecting to a selected database...");
+            conn = DriverManager.getConnection(DB_URL, USER, PASS);
+            System.out.println("Connected database successfully...");
+
+            //STEP 4: Execute a query
+            System.out.println("Creating statement...");
+            stmt = conn.createStatement();
+            String usesql = "USE DBClass";
+            stmt.executeUpdate(usesql);
+            String sql = "SELECT av.id, ass.nom as assnom, es.nom as esnom, av.nota, av.any FROM avaluacio av, assignatura ass, estudiant es WHERE av.id_assignatura = ass.id and av.id_estudiant = es.id";
+            ResultSet rs = stmt.executeQuery(sql);
+            //STEP 5: Extract data from result set
+            while (rs.next()) {
+                String id = rs.getInt("id") + "";
+                String nomAssignatura = rs.getString("assnom");
+                String nomEstudiant = rs.getString("esnom");
+                String nota = rs.getString("nota");
+                String any = rs.getString("any");
+
+                Avaluacio avaluacio = new Avaluacio(id, nomAssignatura, nomEstudiant, nota, any);
+
+                llistaAssignatures.add(avaluacio);
+            }
+            rs.close();
+        } catch (SQLException se) {
+            //Handle errors for JDBC
+            se.printStackTrace();
+        } catch (Exception e) {
+            //Handle errors for Class.forName
+            e.printStackTrace();
+        } finally {
+            //finally block used to close resources
+            try {
+                if (stmt != null) {
+                    conn.close();
+                }
+            } catch (SQLException se) {
+            }// do nothing
+            try {
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }//end finally try
+        }//end try      
+
+        return llistaAssignatures;
+
+    }
+
     public static List obtenirAssignatures() {
         List llistaAssignatures = new ArrayList();
         Connection conn = null;
@@ -262,12 +322,12 @@ public class basedades {
             ResultSet rs = stmt.executeQuery(sql);
             //STEP 5: Extract data from result set
             while (rs.next()) {
-                String id = rs.getInt("id")+"";
+                String id = rs.getInt("id") + "";
                 String nom = rs.getString("nom");
                 String credits = rs.getString("credits");
                 String descripcio = rs.getString("descripcio");
-                
-                Assignatura assignatura = new Assignatura(nom, credits, descripcio,id);
+
+                Assignatura assignatura = new Assignatura(nom, credits, descripcio, id);
 
                 llistaAssignatures.add(assignatura);
             }
@@ -298,7 +358,7 @@ public class basedades {
         return llistaAssignatures;
 
     }
-    
+
     public static List obtenirProfessors() {
         List llistaEstudiants = new ArrayList();
         Connection conn = null;
@@ -329,7 +389,7 @@ public class basedades {
                 String id = rs.getInt("id") + "";
                 String nom = rs.getString("nom");
                 String departament = rs.getString("departament");
-                
+
                 Professor professor = new Professor(id, nom, departament);
 
                 llistaEstudiants.add(professor);

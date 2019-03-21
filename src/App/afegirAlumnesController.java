@@ -103,14 +103,14 @@ public class afegirAlumnesController implements Initializable {
         String sAdreca = adreca.getText();
         return !(sNomicognoms.isEmpty() || sDNI.isEmpty() || sAdreca.isEmpty());
     }
-    
-    public void correctInputValidator(){
+
+    public void correctInputValidator() {
         adreca.validate();
         nomicognoms.validate();
         dni.validate();
         if (correctInput()) {
             afegirAlumneBtn.setDisable(false);
-        }else{
+        } else {
             afegirAlumneBtn.setDisable(true);
         }
     }
@@ -131,6 +131,30 @@ public class afegirAlumnesController implements Initializable {
 
     public void changeToProfessorsScene(ActionEvent event) throws IOException {
         Parent professors = FXMLLoader.load(getClass().getResource("llistaProfessors.fxml"));
+        Scene professorsScene = new Scene(professors, 1000, 700);
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        window.setScene(professorsScene);
+        window.show();
+    }
+
+    public void changeToAvaluacionsScene(ActionEvent event) throws IOException {
+        Parent professors = FXMLLoader.load(getClass().getResource("llistaAvaluacions.fxml"));
+        Scene professorsScene = new Scene(professors, 1000, 700);
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        window.setScene(professorsScene);
+        window.show();
+    }
+
+    public void changeToAssignaturesScene(ActionEvent event) throws IOException {
+        Parent professors = FXMLLoader.load(getClass().getResource("llistaAssignatures.fxml"));
+        Scene professorsScene = new Scene(professors, 1000, 700);
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        window.setScene(professorsScene);
+        window.show();
+    }
+
+    public void changeToAssignacionsScene(ActionEvent event) throws IOException {
+        Parent professors = FXMLLoader.load(getClass().getResource("llistaAssignacions.fxml"));
         Scene professorsScene = new Scene(professors, 1000, 700);
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(professorsScene);

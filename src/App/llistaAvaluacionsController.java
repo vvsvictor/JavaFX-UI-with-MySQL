@@ -6,6 +6,7 @@
 package App;
 
 import Classes.Assignatura;
+import Classes.Avaluacio;
 import Database.basedades;
 import java.io.IOException;
 import java.net.URL;
@@ -29,40 +30,37 @@ import javafx.stage.Stage;
  *
  * @author Víctor
  */
-public class llistaAssignaturesController implements Initializable {
+public class llistaAvaluacionsController implements Initializable {
 
     @FXML
     private TableView<Assignatura> tableView;
     @FXML
-    private TableColumn<Assignatura, String> idAssignatura;
+    private TableColumn<Assignatura, String> idMatriculacio;
     @FXML
     private TableColumn<Assignatura, String> nomAssignatura;
     @FXML
-    private TableColumn<Assignatura, String> descripcioAssignatura;
-
+    private TableColumn<Assignatura, String> curs;
     @FXML
-    private TableColumn<Assignatura, String> creditsAssignatura;
+    private TableColumn<Assignatura, String> nota;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         //Set uop the columns in the table
-        idAssignatura.setCellValueFactory(new PropertyValueFactory<>("id"));
+        idMatriculacio.setCellValueFactory(new PropertyValueFactory<>("id"));
         nomAssignatura.setCellValueFactory(new PropertyValueFactory<>("nom"));
-        //TODO verificacion de creditos a int
-        descripcioAssignatura.setCellValueFactory(new PropertyValueFactory<>("descripcio"));
-        creditsAssignatura.setCellValueFactory(new PropertyValueFactory<>("credits"));
-
+        curs.setCellValueFactory(new PropertyValueFactory<>("curs"));
+        nota.setCellValueFactory(new PropertyValueFactory<>("nota"));
         //Load data
-        tableView.setItems(getAssignatures());
+        tableView.setItems(getNotes());
     }
 
-    public ObservableList getAssignatures() {
-        ObservableList<Assignatura> assignatures = FXCollections.observableArrayList();
-        List llistaAssignatures = basedades.obtenirAssignatures();
-        for (int i = 0; i < llistaAssignatures.size(); i++) {
+    public ObservableList getNotes() {
+        ObservableList<Avaluacio> assignatures = FXCollections.observableArrayList();
+        List llistaAvaluacions = basedades.obtenirAvaluacions();
+        for (int i = 0; i < llistaAvaluacions.size(); i++) {
             //Array amb les dades del professor
-            Assignatura assignatura = (Assignatura) llistaAssignatures.get(i);
-            assignatures.add(assignatura);
+            Avaluacio avaluacio = (Avaluacio)llistaAvaluacions.get(i);
+            assignatures.add(avaluacio);
         }
 
         return assignatures;
@@ -75,14 +73,15 @@ public class llistaAssignaturesController implements Initializable {
         window.setScene(alumnesScene);
         window.show();
     }
-
-    public void changeToafegirAssignatures(ActionEvent event) throws IOException {
-        Parent afegirAlumne = FXMLLoader.load(getClass().getResource("afegirAssignatures.fxml"));
-        Scene afegirAlumneScene = new Scene(afegirAlumne, 1000, 700);
+    
+     public void changeToAssignaturesScene(ActionEvent event) throws IOException {
+        Parent professors = FXMLLoader.load(getClass().getResource("llistaAssignatures.fxml"));
+        Scene professorsScene = new Scene(professors, 1000, 700);
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        window.setScene(afegirAlumneScene);
+        window.setScene(professorsScene);
         window.show();
     }
+
 
     public void changeToProfessorsScene(ActionEvent event) throws IOException {
         Parent professors = FXMLLoader.load(getClass().getResource("llistaProfessors.fxml"));
@@ -91,20 +90,13 @@ public class llistaAssignaturesController implements Initializable {
         window.setScene(professorsScene);
         window.show();
     }
-
-    public void changeToAvaluacionsScene(ActionEvent event) throws IOException {
-        Parent professors = FXMLLoader.load(getClass().getResource("llistaAvaluacions.fxml"));
-        Scene professorsScene = new Scene(professors, 1000, 700);
-        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        window.setScene(professorsScene);
-        window.show();
-    }
-
-    public void changeToAssignacionsScene(ActionEvent event) throws IOException {
+     public void changeToAssignacionsScene(ActionEvent event) throws IOException {
         Parent professors = FXMLLoader.load(getClass().getResource("llistaAssignacions.fxml"));
         Scene professorsScene = new Scene(professors, 1000, 700);
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(professorsScene);
         window.show();
     }
+     
+    
 }

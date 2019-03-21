@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 19-03-2019 a las 20:50:28
+-- Tiempo de generación: 21-03-2019 a las 18:38:13
 -- Versión del servidor: 10.1.37-MariaDB
 -- Versión de PHP: 7.3.1
 
@@ -40,9 +40,7 @@ CREATE TABLE `assignatura` (
 --
 
 INSERT INTO `assignatura` (`id`, `nom`, `credits`, `descripcio`) VALUES
-(1, 'ifne', 9, 'f'),
-(2, 'fsegf', 3, 'egterg'),
-(3, 'afaef', 55, 'sfes');
+(6, 'Programació', 6, 'Programació en Java');
 
 -- --------------------------------------------------------
 
@@ -58,6 +56,13 @@ CREATE TABLE `avaluacio` (
   `any` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Volcado de datos para la tabla `avaluacio`
+--
+
+INSERT INTO `avaluacio` (`id`, `id_assignatura`, `id_estudiant`, `nota`, `any`) VALUES
+(1, 6, 1, 9, 2019);
+
 -- --------------------------------------------------------
 
 --
@@ -70,6 +75,13 @@ CREATE TABLE `curs` (
   `id_professor` int(11) NOT NULL,
   `id_assignatura` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `curs`
+--
+
+INSERT INTO `curs` (`id`, `any`, `id_professor`, `id_assignatura`) VALUES
+(1, 2019, 1, 6);
 
 -- --------------------------------------------------------
 
@@ -90,12 +102,7 @@ CREATE TABLE `estudiant` (
 
 INSERT INTO `estudiant` (`id`, `nom`, `dni`, `adreca`) VALUES
 (1, 'Victor Vivancos', '3944343L', 'Carrer cartellà'),
-(2, 'Eduardo Torres', '39441061V', 'Calle Castor '),
-(3, 'Hola', '3545', 'fgzrgzr'),
-(4, 'Emili', '4545', 'fhaejf'),
-(5, 'test', 'gdg', 'rdg'),
-(6, 'kjp', '5555', 'vvm'),
-(7, '', '', '');
+(2, 'Eduardo Torres', '39441061V', 'Calle Castor ');
 
 -- --------------------------------------------------------
 
@@ -114,10 +121,7 @@ CREATE TABLE `professor` (
 --
 
 INSERT INTO `professor` (`id`, `nom`, `departament`) VALUES
-(1, 'Emili', 'Programacio'),
-(2, 'fgfh', 'fght'),
-(3, 'ljppkj', 'hbbikhh'),
-(4, 'knhj', '');
+(1, 'Emili', 'Programacio');
 
 --
 -- Índices para tablas volcadas
@@ -165,31 +169,31 @@ ALTER TABLE `professor`
 -- AUTO_INCREMENT de la tabla `assignatura`
 --
 ALTER TABLE `assignatura`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `avaluacio`
 --
 ALTER TABLE `avaluacio`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `curs`
 --
 ALTER TABLE `curs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `estudiant`
 --
 ALTER TABLE `estudiant`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de la tabla `professor`
 --
 ALTER TABLE `professor`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- Restricciones para tablas volcadas

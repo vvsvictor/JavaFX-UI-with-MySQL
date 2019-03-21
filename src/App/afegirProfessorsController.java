@@ -28,7 +28,7 @@ public class afegirProfessorsController implements Initializable {
 
     @FXML
     private JFXButton afegirProfessorsBtn;
-    
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         afegirProfessorsBtn.setDisable(true);
@@ -57,17 +57,17 @@ public class afegirProfessorsController implements Initializable {
         });
 
     }
-    
-    public void inputValidator(){
+
+    public void inputValidator() {
         nomicognoms.validate();
         departament.validate();
         String sNomicognoms = nomicognoms.getText();
         String sDepartament = departament.getText();
         boolean correctInput;
-        correctInput= !(sNomicognoms.isEmpty() || sDepartament.isEmpty());
+        correctInput = !(sNomicognoms.isEmpty() || sDepartament.isEmpty());
         if (correctInput) {
             afegirProfessorsBtn.setDisable(false);
-        }else{
+        } else {
             afegirProfessorsBtn.setDisable(true);
         }
     }
@@ -106,6 +106,22 @@ public class afegirProfessorsController implements Initializable {
         window.setScene(afegirAlumneScene);
         window.show();
 
+    }
+
+    public void changeToAvaluacionsScene(ActionEvent event) throws IOException {
+        Parent professors = FXMLLoader.load(getClass().getResource("llistaAvaluacions.fxml"));
+        Scene professorsScene = new Scene(professors, 1000, 700);
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        window.setScene(professorsScene);
+        window.show();
+    }
+
+    public void changeToAssignacionsScene(ActionEvent event) throws IOException {
+        Parent professors = FXMLLoader.load(getClass().getResource("llistaAssignacions.fxml"));
+        Scene professorsScene = new Scene(professors, 1000, 700);
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        window.setScene(professorsScene);
+        window.show();
     }
 
 }

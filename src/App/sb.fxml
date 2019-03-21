@@ -16,7 +16,7 @@
    <left>
       <VBox prefHeight="444.0" prefWidth="181.0" style="-fx-background-color: #393e46;" BorderPane.alignment="CENTER">
          <children>
-            <JFXButton prefHeight="110.0" prefWidth="181.0" text="Alumnes" textFill="WHITE">
+            <JFXButton prefHeight="80.0" prefWidth="181.0" text="Alumnes" textFill="WHITE">
                <font>
                   <Font size="17.0" />
                </font>
@@ -24,7 +24,7 @@
                   <Insets />
                </VBox.margin>
             </JFXButton>
-            <JFXButton onAction="#changeToProfessorsScene" prefHeight="117.0" prefWidth="181.0" text="Professors" textFill="WHITE">
+            <JFXButton onAction="#changeToProfessorsScene" prefHeight="80.0" prefWidth="181.0" text="Professors" textFill="WHITE">
                <font>
                   <Font size="17.0" />
                </font>
@@ -32,13 +32,23 @@
                   <Insets />
                </VBox.margin>
             </JFXButton>
-            <JFXButton onAction="#changeToAssignaturesScene" prefHeight="125.0" prefWidth="181.0" text="Assignatures" textFill="WHITE">
+            <JFXButton onAction="#changeToAssignaturesScene" prefHeight="80.0" prefWidth="181.0" text="Assignatures" textFill="WHITE">
                <font>
                   <Font size="17.0" />
                </font>
                <VBox.margin>
                   <Insets />
                </VBox.margin>
+            </JFXButton>
+            <JFXButton onAction="#changeToAvaluacionsScene" prefHeight="80.0" prefWidth="181.0" text="Avaluacions" textFill="WHITE">
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </JFXButton>
+            <JFXButton onAction="#changeToAssignacionsScene" prefHeight="80.0" prefWidth="181.0" text="Assignacions" textFill="WHITE">
+               <font>
+                  <Font size="17.0" />
+               </font>
             </JFXButton>
          </children>
       </VBox>
