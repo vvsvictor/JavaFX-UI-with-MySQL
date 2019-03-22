@@ -3,11 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Víctor/Google%20Drive/DAM/M03%20Programació/UF6/P8_Vivancos_Victor/src/App/afegirAssignatures.fxml</file>
             <file>file:/C:/Users/Víctor/Google%20Drive/DAM/M03%20Programació/UF6/P8_Vivancos_Victor/src/App/llistaAvaluacionsController.java</file>
+            <file>file:/C:/Users/Víctor/Google%20Drive/DAM/M03%20Programació/UF6/P8_Vivancos_Victor/src/App/llistaAssignacionsController.java</file>
             <file>file:/C:/Users/Víctor/Google%20Drive/DAM/M03%20Programació/UF6/P8_Vivancos_Victor/src/App/llistaAvaluacions.fxml</file>
             <file>file:/C:/Users/Víctor/Google%20Drive/DAM/M03%20Programació/UF6/P8_Vivancos_Victor/src/Classes/Avaluacio.java</file>
-            <file>file:/C:/Users/Víctor/Google%20Drive/DAM/M03%20Programació/UF6/P8_Vivancos_Victor/src/Database/basedades.java</file>
+            <file>file:/C:/Users/Víctor/Google%20Drive/DAM/M03%20Programació/UF6/P8_Vivancos_Victor/src/App/sceneAlumnesController.java</file>
         </group>
     </open-files>
 </project-private>

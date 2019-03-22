@@ -84,7 +84,7 @@
    <right>
       <VBox prefHeight="398.0" prefWidth="112.0" BorderPane.alignment="CENTER">
          <children>
-            <JFXButton prefHeight="727.0" prefWidth="112.0" style="-fx-background-color: #393e46; -fx-pref-height: 1000;" text=" " textFill="WHITE">
+            <JFXButton onAction="#changeToAfegirAvaluacions" prefHeight="727.0" prefWidth="112.0" style="-fx-background-color: #393e46; -fx-pref-height: 1000;" text=" " textFill="WHITE">
                <graphic>
                   <ImageView fitHeight="42.0" fitWidth="63.0" pickOnBounds="true" preserveRatio="true">
                      <image>

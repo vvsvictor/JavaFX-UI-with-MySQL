@@ -39,7 +39,7 @@ public class llistaAvaluacionsController implements Initializable {
     private TableColumn<Avaluacio, String> assignaturaAvaluacio;
     @FXML
     private TableColumn<Avaluacio, String> estudiantAvaluacio;
-    
+
     @FXML
     private TableColumn<Avaluacio, String> notaAvaluacio;
     @FXML
@@ -98,6 +98,14 @@ public class llistaAvaluacionsController implements Initializable {
         Scene professorsScene = new Scene(professors, 1000, 700);
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(professorsScene);
+        window.show();
+    }
+    
+    public void changeToAfegirAvaluacions(ActionEvent event) throws IOException {
+        Parent avaluacions = FXMLLoader.load(getClass().getResource("afegirAvaluacions.fxml"));
+        Scene avaluacionsScene = new Scene(avaluacions, 1000, 700);
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        window.setScene(avaluacionsScene);
         window.show();
     }
 
