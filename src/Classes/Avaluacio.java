@@ -1,5 +1,9 @@
 package Classes;
-
+/**
+ * Classe Avaluacio
+ * @author Víctor Vivancos Serrano
+ * (Tot String per afegir-ho com a text al textField)
+ */
 public class Avaluacio {
 
     private String id;

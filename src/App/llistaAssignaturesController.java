@@ -107,4 +107,6 @@ public class llistaAssignaturesController implements Initializable {
         window.setScene(professorsScene);
         window.show();
     }
+    
+    
 }

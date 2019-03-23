@@ -1,16 +1,25 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Classes;
 
+/**
+ * Classe Alumne
+ * @author Víctor Vivancos
+ * (Tot String per afegir-ho com a text al textField)
+ */
 public class Alumne {
+
     private String id;
     private String nom;
     private String dni;
     private String adreca;
 
+    /**
+     * Mètode Constructor
+     *
+     * @param id
+     * @param nom
+     * @param dni
+     * @param adreca
+     */
     public Alumne(String id, String nom, String dni, String adreca) {
         this.id = id;
         this.nom = nom;
@@ -49,5 +58,5 @@ public class Alumne {
     public void setAdreca(String adreca) {
         this.adreca = adreca;
     }
-    
+
 }

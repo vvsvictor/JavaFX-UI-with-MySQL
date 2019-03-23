@@ -11,7 +11,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane prefHeight="490.0" prefWidth="861.0" style="-fx-background-color: #222831;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="App.afegirAvaluacionsController">
+<BorderPane prefHeight="490.0" prefWidth="861.0" style="-fx-background-color: #222831;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="App.afegirAvaluacionsController">
    <left>
       <VBox prefHeight="444.0" prefWidth="181.0" style="-fx-background-color: #393e46;" BorderPane.alignment="CENTER">
          <children>
@@ -84,7 +84,7 @@
                               <Insets left="20.0" />
                            </VBox.margin>
                         </Text>
-                        <JFXComboBox fx:id="estudiantscb" prefHeight="25.0" prefWidth="236.0" style="-fx-text-inner-color: white;">
+                        <JFXComboBox fx:id="estudiantscb" onAction="#validateInput" onDragDetected="#validateInput" onDragEntered="#validateInput" onDragExited="#validateInput" onDragOver="#validateInput" prefHeight="25.0" prefWidth="236.0" style="-fx-text-inner-color: white;" stylesheets="@../CSS/combobox.css">
                            <VBox.margin>
                               <Insets left="20.0" top="20.0" />
                            </VBox.margin>
@@ -97,7 +97,7 @@
                               <Insets left="20.0" top="20.0" />
                            </VBox.margin>
                         </Text>
-                        <JFXComboBox fx:id="assignaturacb" prefHeight="25.0" prefWidth="253.0" style="-fx-text-inner-color: white;">
+                        <JFXComboBox fx:id="assignaturacb" onAction="#validateInput" onDragDetected="#validateInput" onDragEntered="#validateInput" onDragExited="#validateInput" onDragOver="#validateInput" prefHeight="25.0" prefWidth="253.0" style="-fx-text-inner-color: white;" stylesheets="@../CSS/combobox.css">
                            <VBox.margin>
                               <Insets left="20.0" top="20.0" />
                            </VBox.margin>
@@ -114,7 +114,7 @@
                               <Insets left="20.0" />
                            </VBox.margin>
                         </Text>
-                        <JFXTextField fx:id="nota" style="-fx-text-inner-color: white;">
+                        <JFXTextField fx:id="nota" onKeyPressed="#validateInput" onKeyReleased="#validateInput" onKeyTyped="#validateInput" style="-fx-text-inner-color: white;">
                            <VBox.margin>
                               <Insets left="20.0" top="23.0" />
                            </VBox.margin>
@@ -127,7 +127,7 @@
                               <Insets left="20.0" top="20.0" />
                            </VBox.margin>
                         </Text>
-                        <JFXComboBox fx:id="curscb" prefHeight="25.0" prefWidth="253.0" style="-fx-text-inner-color: white;">
+                        <JFXComboBox fx:id="curscb" onAction="#validateInput" onDragDetected="#validateInput" onDragEntered="#validateInput" onDragExited="#validateInput" onDragOver="#validateInput" prefHeight="25.0" prefWidth="253.0" style="-fx-text-inner-color: white;" stylesheets="@../CSS/combobox.css">
                            <VBox.margin>
                               <Insets left="20.0" top="23.0" />
                            </VBox.margin>
@@ -136,7 +136,7 @@
                   </VBox>
                </children>
             </HBox>
-            <JFXButton fx:id="afegirAvaluacionsBtn" prefHeight="51.0" prefWidth="245.0" style="-fx-background-color: #00adb5;" text="Afegir" textFill="WHITE">
+            <JFXButton fx:id="afegirAvaluacionsBtn" onAction="#addAvaluacio" prefHeight="51.0" prefWidth="245.0" style="-fx-background-color: #00adb5;" text="Afegir" textFill="WHITE">
                <font>
                   <Font size="16.0" />
                </font>

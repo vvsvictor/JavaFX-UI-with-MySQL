@@ -8,6 +8,11 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Classe basedades
+ *
+ * @author Víctor Vivancos Serrano
+ */
 public class basedades {
 
     // JDBC driver name and database URL
@@ -18,6 +23,11 @@ public class basedades {
     static final String USER = "root";
     static final String PASS = "";
 
+    /**
+     * Mètode per comprovar si la base de dades existeix
+     *
+     * @return
+     */
     public static boolean baseDadesExisteix() {
         boolean existeix = false;
 
@@ -70,6 +80,9 @@ public class basedades {
         return existeix;
     }
 
+    /**
+     * Mètode per crear la base de dades
+     */
     public static void crearBD() {
 
         Connection conn = null;
@@ -133,6 +146,11 @@ public class basedades {
 
     }
 
+    /**
+     * Mètode per executar una sentència SQL
+     *
+     * @param query
+     */
     public static void executarQuery(String query) {
         Connection conn = null;
         Statement stmt = null;
@@ -171,11 +189,32 @@ public class basedades {
         }//end try
     }
 
+    /**
+     * Mètode per afegir estudiants
+     *
+     * @param nom
+     * @param dni
+     * @param adreca
+     */
     public static void afegirEstudiant(String nom, String dni, String adreca) {
 
         executarQuery("INSERT INTO estudiant (nom, dni, adreca) VALUES ('" + nom + "','" + dni + "','" + adreca + "')");
     }
+    /**
+     * Mètode per afegir una assignació
+     * @param idProfessor
+     * @param curs
+     * @param assignatura 
+     */
+    public static void afegirAssignacio(int idProfessor, int curs, int assignatura){
+           executarQuery("INSERT INTO curs (any, id_professor, id_assignatura) VALUES ('" + curs + "','" + idProfessor + "','" + assignatura + "')");
+    }
 
+    /**
+     * Mètode per obtenir tots els estudiants en objectes Estudiant
+     *
+     * @return
+     */
     public static List obtenirEstudiants() {
         List llistaEstudiants = new ArrayList();
         Connection conn = null;
@@ -241,6 +280,11 @@ public class basedades {
 
     }
 
+    /**
+     * Mètode per obtenir totes les assignacions en un objecte Assignacions
+     *
+     * @return
+     */
     public static List obtenirAssignacions() {
         List llistaAssignacions = new ArrayList();
         Connection conn = null;
@@ -299,6 +343,11 @@ public class basedades {
 
     }
 
+    /**
+     * Mètode per obtenir totes les avaluacions en un objecte Avaluacions
+     *
+     * @return
+     */
     public static List obtenirAvaluacions() {
         List llistaAssignatures = new ArrayList();
         Connection conn = null;
@@ -359,6 +408,12 @@ public class basedades {
 
     }
 
+    /**
+     * Mètode per obtenir una List amb totes les assignatures en el objecte
+     * Assignatura
+     *
+     * @return
+     */
     public static List obtenirAssignatures() {
         List llistaAssignatures = new ArrayList();
         Connection conn = null;
@@ -418,6 +473,11 @@ public class basedades {
 
     }
 
+    /**
+     * Mètode per obtenir una List amb tots els objectes Professor
+     *
+     * @return
+     */
     public static List obtenirProfessors() {
         List llistaEstudiants = new ArrayList();
         Connection conn = null;
@@ -481,14 +541,102 @@ public class basedades {
 
     }
 
+    /**
+     * Mètode per afegir una avaluació
+     *
+     * @param DNIestudiant
+     * @param curs
+     * @param dNota
+     */
+    public static void afegirAvaluacio(String DNIestudiant, int idAssignatura, double dNota, int any) {
+        int idEstudiant = obtenirIDEstudiant(DNIestudiant);
+        executarQuery("INSERT INTO avaluacio (id_assignatura, id_estudiant, nota, any) VALUES (" + idAssignatura + "," + idEstudiant + "," + dNota + "," + any + ")");
+    }
+
+    /**
+     * Mètode per obtenir el ID de l'alumne segons el seu DNI
+     *
+     * @param DNI
+     * @return
+     */
+    private static int obtenirIDEstudiant(String DNI) {
+        int id=1;
+        Connection conn = null;
+        Statement stmt = null;
+        try {
+            //STEP 2: Register JDBC driver
+            Class.forName("com.mysql.jdbc.Driver");
+
+            //STEP 3: Open a connection
+            System.out.println("Connecting to a selected database...");
+            conn = DriverManager.getConnection(DB_URL, USER, PASS);
+            System.out.println("Connected database successfully...");
+
+            //STEP 4: Execute a query
+            System.out.println("Creating statement...");
+            stmt = conn.createStatement();
+            String usesql = "USE DBClass";
+            stmt.executeUpdate(usesql);
+            String sql = "SELECT id FROM estudiant WHERE dni='" + DNI + "'";
+            ResultSet rs = stmt.executeQuery(sql);
+            //STEP 5: Extract data from result set
+            while (rs.next()) {
+
+                id = rs.getInt("id");
+
+            }
+            rs.close();
+        } catch (SQLException se) {
+            //Handle errors for JDBC
+            se.printStackTrace();
+        } catch (Exception e) {
+            //Handle errors for Class.forName
+            e.printStackTrace();
+        } finally {
+            //finally block used to close resources
+            try {
+                if (stmt != null) {
+                    conn.close();
+                }
+            } catch (SQLException se) {
+            }// do nothing
+            try {
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }//end finally try
+        }//end try      
+        return id;
+    }
+
+    /**
+     * Mètode per afegir una Assignatura
+     *
+     * @param nom
+     * @param credits
+     * @param descripcio
+     */
     public static void afegirAssignatura(String nom, String credits, String descripcio) {
         executarQuery("INSERT INTO assignatura (nom, credits, descripcio) VALUES ('" + nom + "'," + credits + ",'" + descripcio + "')");
     }
 
+    /**
+     * Mètode per afegir un professor
+     *
+     * @param nom
+     * @param departament
+     */
     public static void afegirProfessor(String nom, String departament) {
         executarQuery("INSERT INTO professor (nom, departament) VALUES ('" + nom + "','" + departament + "')");
     }
 
+    /**
+     * Mètode principal per crear la base de dades
+     *
+     * @param args
+     */
     public static void main(String[] args) {
         if (baseDadesExisteix()) {
             System.out.println("Existeix");

@@ -2,7 +2,6 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXComboBox?>
-<?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
@@ -11,7 +10,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane prefHeight="490.0" prefWidth="861.0" style="-fx-background-color: #222831;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="App.afegirAvaluacionsController">
+<BorderPane prefHeight="490.0" prefWidth="861.0" style="-fx-background-color: #222831;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="App.afegirAssignacionsController">
    <left>
       <VBox prefHeight="444.0" prefWidth="181.0" style="-fx-background-color: #393e46;" BorderPane.alignment="CENTER">
          <children>
@@ -53,7 +52,7 @@
       </VBox>
    </left>
    <top>
-      <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Afegir Avaluació" wrappingWidth="202.9831027984619" BorderPane.alignment="CENTER">
+      <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Afegir Assignació" textAlignment="CENTER" wrappingWidth="261.9831027984619" BorderPane.alignment="CENTER">
          <font>
             <Font size="27.0" />
          </font>
@@ -76,7 +75,7 @@
                <children>
                   <VBox prefHeight="200.0" prefWidth="100.0">
                      <children>
-                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Estudiant" wrappingWidth="243.490234375">
+                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Professor" wrappingWidth="243.490234375">
                            <font>
                               <Font size="23.0" />
                            </font>
@@ -84,7 +83,7 @@
                               <Insets left="20.0" />
                            </VBox.margin>
                         </Text>
-                        <JFXComboBox fx:id="estudiantscb" prefHeight="25.0" prefWidth="236.0" style="-fx-text-inner-color: white;">
+                        <JFXComboBox fx:id="professorscb" onMouseEntered="#validateInput" onMouseExited="#validateInput" prefHeight="25.0" prefWidth="236.0" style="-fx-text-fill: white;" stylesheets="@../CSS/combobox.css">
                            <VBox.margin>
                               <Insets left="20.0" top="20.0" />
                            </VBox.margin>
@@ -97,7 +96,7 @@
                               <Insets left="20.0" top="20.0" />
                            </VBox.margin>
                         </Text>
-                        <JFXComboBox fx:id="assignaturacb" prefHeight="25.0" prefWidth="253.0" style="-fx-text-inner-color: white;">
+                        <JFXComboBox fx:id="assignaturescb" onMouseEntered="#validateInput" onMouseExited="#validateInput" prefHeight="25.0" prefWidth="253.0" style="-fx-text-fill: white;" stylesheets="@../CSS/combobox.css">
                            <VBox.margin>
                               <Insets left="20.0" top="20.0" />
                            </VBox.margin>
@@ -106,7 +105,7 @@
                   </VBox>
                   <VBox prefHeight="200.0" prefWidth="100.0">
                      <children>
-                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Nota" wrappingWidth="243.490234375">
+                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Curs" wrappingWidth="243.490234375">
                            <font>
                               <Font size="23.0" />
                            </font>
@@ -114,29 +113,16 @@
                               <Insets left="20.0" />
                            </VBox.margin>
                         </Text>
-                        <JFXTextField fx:id="nota" style="-fx-text-inner-color: white;">
-                           <VBox.margin>
-                              <Insets left="20.0" top="23.0" />
-                           </VBox.margin>
-                        </JFXTextField>
-                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Curs" wrappingWidth="243.490234375">
-                           <font>
-                              <Font size="23.0" />
-                           </font>
+                        <JFXComboBox fx:id="curscb" onMouseEntered="#validateInput" onMouseExited="#validateInput" prefHeight="25.0" prefWidth="253.0" style="-fx-text-fill: white;" stylesheets="@../CSS/combobox.css">
                            <VBox.margin>
                               <Insets left="20.0" top="20.0" />
-                           </VBox.margin>
-                        </Text>
-                        <JFXComboBox fx:id="curscb" prefHeight="25.0" prefWidth="253.0" style="-fx-text-inner-color: white;">
-                           <VBox.margin>
-                              <Insets left="20.0" top="23.0" />
                            </VBox.margin>
                         </JFXComboBox>
                      </children>
                   </VBox>
                </children>
             </HBox>
-            <JFXButton fx:id="afegirAvaluacionsBtn" prefHeight="51.0" prefWidth="245.0" style="-fx-background-color: #00adb5;" text="Afegir" textFill="WHITE">
+            <JFXButton fx:id="afegirAssignacionsBtn" onAction="#addAssignacio" prefHeight="51.0" prefWidth="245.0" style="-fx-background-color: #00adb5;" text="Afegir" textFill="WHITE">
                <font>
                   <Font size="16.0" />
                </font>

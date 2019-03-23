@@ -108,4 +108,11 @@ public class llistaAssignacionsController implements Initializable {
         window.setScene(professorsScene);
         window.show();
     }
+    public void changeToAfegirAssignacionsScene(ActionEvent event) throws IOException {
+        Parent professors = FXMLLoader.load(getClass().getResource("afegirAssignacions.fxml"));
+        Scene professorsScene = new Scene(professors, 1000, 700);
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        window.setScene(professorsScene);
+        window.show();
+    }
 }

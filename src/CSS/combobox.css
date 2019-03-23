@@ -1,0 +1,8 @@
+.jfx-combo-box {
+  -fx-text-fill: blue;
+}
+
+
+.combo-box .cell{
+    -fx-text-fill:  #00adb5;
+}

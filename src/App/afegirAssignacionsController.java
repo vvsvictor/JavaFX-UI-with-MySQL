@@ -2,8 +2,9 @@ package App;
 
 import Classes.Alumne;
 import Classes.Assignatura;
+import Classes.Professor;
 import Database.basedades;
-import static Database.basedades.afegirProfessor;
+import static Database.basedades.*;
 import static Database.basedades.obtenirEstudiants;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
@@ -28,42 +29,33 @@ import javafx.stage.Stage;
 import java.util.List;
 import javafx.scene.control.TextField;
 
-public class afegirAvaluacionsController implements Initializable {
+public class afegirAssignacionsController implements Initializable {
 //    
 //    ObservableList<String> estidiantsList;
 //    
 
     @FXML
-    private JFXComboBox<String> estudiantscb;
+    private JFXComboBox<String> professorscb;
+
+    @FXML
+    private JFXComboBox<String> assignaturescb;
 
     @FXML
     private JFXComboBox<String> curscb;
 
     @FXML
-    private JFXTextField nota;
-
-    @FXML
-    private JFXComboBox<String> assignaturacb;
-
-    @FXML
-    private JFXButton afegirAvaluacionsBtn;
+    private JFXButton afegirAssignacionsBtn;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        afegirAvaluacionsBtn.setDisable(true);
-        List estudiants = obtenirEstudiants();
-        NumberValidator numberValid = new NumberValidator();
-        numberValid.setMessage("El valor introduït no és correcte");
-        RequiredFieldValidator validator = new RequiredFieldValidator();
-        validator.setMessage("Falten valors d'entrada");
-        nota.getValidators().add(validator);
-        nota.getValidators().add(numberValid);
+        afegirAssignacionsBtn.setDisable(true);
 
-        for (int i = 0; i < estudiants.size(); i++) {
-            String[] estudiant = (String[]) estudiants.get(i);
-            String nom = estudiant[1];
-            nom += " - " + estudiant[2];
-            estudiantscb.getItems().add(nom);
+        List professors = basedades.obtenirProfessors();
+        for (int i = 0; i < professors.size(); i++) {
+            Professor professor = (Professor) professors.get(i);
+            String nom = professor.getId() + " - ";
+            nom += professor.getNom();
+            professorscb.getItems().add(nom);
         }
 
         List assignatures = basedades.obtenirAssignatures();
@@ -71,7 +63,7 @@ public class afegirAvaluacionsController implements Initializable {
             Assignatura assignatura = (Assignatura) assignatures.get(i);
             String nom = assignatura.getId();
             nom += " - " + assignatura.getNom();
-            assignaturacb.getItems().add(nom);
+            assignaturescb.getItems().add(nom);
         }
 
         for (int i = 2014; i < 2019; i++) {
@@ -80,51 +72,46 @@ public class afegirAvaluacionsController implements Initializable {
 
     }
 
+    public void addAssignacio(ActionEvent event) throws IOException {
+        String professor = professorscb.getValue();
+        String[] arrProfessors = professor.split(" - ");
+        professor = arrProfessors[0];
+        String sCurs = curscb.getValue();
+        int iCurs = Integer.parseInt(sCurs);
+        String assignatura = assignaturescb.getValue();
+        String[] arrassignatura = assignatura.split(" - ");
+        assignatura = arrassignatura[0];
+        int idAssignatura = Integer.parseInt(assignatura);
+        int idProfessor = Integer.parseInt(professor);
+        afegirAssignacio(idProfessor, iCurs, idAssignatura);
+
+        changeToAssignacionsScene(event);
+    }
+
+    private boolean isInt(TextField input) {
+        try {
+            int dInput = Integer.parseInt(input.getText());
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
     public void validateInput() {
         try {
-            String estudiant = estudiantscb.getValue();
+            String estudiant = professorscb.getValue();
             String curs = curscb.getValue();
-            String assignatura = assignaturacb.getValue();
+            String assignatura = assignaturescb.getValue();
 
-            if ((!isDouble(nota)) || estudiant.isEmpty() || curs.isEmpty() || assignatura.isEmpty()) {
-                afegirAvaluacionsBtn.setDisable(true);
+            if (estudiant.isEmpty() || curs.isEmpty() || assignatura.isEmpty()) {
+                afegirAssignacionsBtn.setDisable(true);
             } else {
-                double dNota = Double.parseDouble(nota.getText());
-                if (dNota < 0 || dNota > 10) {
-                    afegirAvaluacionsBtn.setDisable(true);
-                } else {
-                    afegirAvaluacionsBtn.setDisable(false);
-                }
+                afegirAssignacionsBtn.setDisable(false);
 
             }
         } catch (Exception e) {
         }
 
-    }
-
-    public void addAvaluacio(ActionEvent event) throws IOException {
-        String estudiant = estudiantscb.getValue();
-        String[] arrEstudiant = estudiant.split(" - ");
-        estudiant = arrEstudiant[1];
-        String sCurs = curscb.getValue();
-        int iCurs = Integer.parseInt(sCurs);
-        double dNota = Double.parseDouble(nota.getText());
-        String assignatura = assignaturacb.getValue();
-        String[] arrAssignatura = assignatura.split(" - ");
-        assignatura = arrAssignatura[0];
-        int iAssignatura = Integer.parseInt(assignatura);
-        basedades.afegirAvaluacio(estudiant, iAssignatura, dNota, iCurs);
-
-        changeToAvaluacionsScene(event);
-    }
-
-    private boolean isDouble(TextField input) {
-        try {
-            double dInput = Double.parseDouble(input.getText());
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
     }
 
     public void changeToListAlumnes(ActionEvent event) throws IOException {

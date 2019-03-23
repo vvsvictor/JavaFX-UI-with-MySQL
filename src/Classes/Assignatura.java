@@ -1,6 +1,10 @@
 
 package Classes;
-
+/**
+ * Classe Assignatura
+ * @author Víctor Vivancos Serrano
+ * (Tot String per afegir-ho com a text al textField)
+ */
 public class Assignatura {
     private String nom;
     private String credits;
