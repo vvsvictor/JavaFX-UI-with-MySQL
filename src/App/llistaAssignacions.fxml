@@ -64,7 +64,7 @@
       </Text>
    </top>
    <center>
-      <TableView fx:id="tableView" prefHeight="398.0" prefWidth="849.0" style="-fx-pref-width: 2000;" BorderPane.alignment="CENTER">
+      <TableView fx:id="tableView" prefHeight="398.0" prefWidth="849.0" style="-fx-pref-width: 2000;" stylesheets="@../CSS/table.css" BorderPane.alignment="CENTER">
         <columns>
             <TableColumn fx:id="idAssignacio" prefWidth="92.0" text="Id" />
           <TableColumn fx:id="anyAssignacio" prefWidth="109.0" text="Any" />

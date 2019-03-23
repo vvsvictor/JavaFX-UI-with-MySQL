@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package App;
 
 import static Database.basedades.*;
@@ -25,13 +21,13 @@ import javafx.stage.Stage;
 
 /**
  *
- * @author Víctor
+ * @author Víctor Vivancos Serrano
  */
 public class afegirAlumnesController implements Initializable {
-
+    //Boto javafx
     @FXML
     private JFXButton afegirAlumneBtn;
-
+    //Input text
     @FXML
     private JFXTextField nomicognoms;
 
@@ -40,17 +36,26 @@ public class afegirAlumnesController implements Initializable {
 
     @FXML
     private JFXTextField adreca;
-
+    /**
+     * Mètode executat al inicialitzar
+     * @param location
+     * @param resources 
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        //Botó deshabilitat al inici
         afegirAlumneBtn.setDisable(true);
+        //Validador de text
         RequiredFieldValidator validator = new RequiredFieldValidator();
-
+        //Afegeixo el validador de text
         nomicognoms.getValidators().add(validator);
         dni.getValidators().add(validator);
         adreca.getValidators().add(validator);
+        //missatge del validador
         validator.setMessage("Falten valors d'entrada");
-
+        /**
+         * Comprovador de canvi
+         */
         nomicognoms.focusedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldVAlue, Boolean newValue) {
@@ -62,7 +67,9 @@ public class afegirAlumnesController implements Initializable {
                 }
             }
         });
-
+        /**
+         * Comprovador de canvi
+         */
         dni.focusedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldVAlue, Boolean newValue) {
@@ -74,7 +81,9 @@ public class afegirAlumnesController implements Initializable {
                 }
             }
         });
-
+        /**
+         * Comprovador de canvi
+         */
         adreca.focusedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldVAlue, Boolean newValue) {

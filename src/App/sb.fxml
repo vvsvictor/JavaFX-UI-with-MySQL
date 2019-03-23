@@ -12,7 +12,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane prefHeight="490.0" prefWidth="861.0" style="-fx-background-color: #222831;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="App.sceneAlumnesController">
+<BorderPane prefHeight="490.0" prefWidth="861.0" style="-fx-background-color: #222831;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="App.sceneAlumnesController">
    <left>
       <VBox prefHeight="444.0" prefWidth="181.0" style="-fx-background-color: #393e46;" BorderPane.alignment="CENTER">
          <children>
@@ -64,12 +64,12 @@
       </Text>
    </top>
    <center>
-      <TableView fx:id="tableView" prefHeight="398.0" prefWidth="849.0" style="-fx-pref-width: 2000;" BorderPane.alignment="CENTER">
+      <TableView fx:id="tableView" prefHeight="398.0" prefWidth="849.0" style="-fx-pref-width: 3000; -fx-background-color: #222831;" stylesheets="@../CSS/table.css" BorderPane.alignment="CENTER">
         <columns>
             <TableColumn fx:id="idAlumne" prefWidth="59.0" text="ID" />
           <TableColumn fx:id="nomAlumne" prefWidth="158.0" text="Nom" />
           <TableColumn fx:id="DNIAlumne" prefWidth="124.0" text="DNI" />
-            <TableColumn fx:id="adrecaAlumne" prefWidth="226.0" text="Adreça" />
+            <TableColumn fx:id="adrecaAlumne" minWidth="0.0" prefWidth="226.0" style="-fx-min-width: 700;" text="Adreça" />
         </columns>
       </TableView>
    </center>

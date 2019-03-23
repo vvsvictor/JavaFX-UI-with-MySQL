@@ -12,7 +12,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane prefHeight="490.0" prefWidth="861.0" style="-fx-background-color: #222831;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="App.llistaAvaluacionsController">
+<BorderPane prefHeight="490.0" prefWidth="861.0" style="-fx-background-color: #222831;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="App.llistaAvaluacionsController">
    <left>
       <VBox prefHeight="444.0" prefWidth="181.0" style="-fx-background-color: #393e46;" BorderPane.alignment="CENTER">
          <children>
@@ -64,7 +64,7 @@
       </Text>
    </top>
    <center>
-      <TableView fx:id="tableView" prefHeight="398.0" prefWidth="849.0" style="-fx-pref-width: 2000;" BorderPane.alignment="CENTER">
+      <TableView fx:id="tableView" prefHeight="398.0" prefWidth="849.0" style="-fx-pref-width: 2000;" stylesheets="@../CSS/table.css" BorderPane.alignment="CENTER">
         <columns>
             <TableColumn fx:id="idAvaluacio" prefWidth="70.0" text="ID" />
             <TableColumn fx:id="estudiantAvaluacio" prefWidth="162.0" text="Estudiant" />

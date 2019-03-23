@@ -46,7 +46,7 @@ public class app extends Application {
         //alumnesListScene.getStylesheets().add("/App/myCss.css");
         primaryStage.setTitle("Classe App");
         primaryStage.setScene(alumnesListScene);
-        
+    
         
        
         primaryStage.show();

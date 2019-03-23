@@ -47,21 +47,21 @@ public class basedades {
             stmt = conn.createStatement();
 
             String sql = "SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = 'DBClass'";
-            ResultSet rs = stmt.executeQuery(sql);
             //STEP 5: Extract data from result set
-            while (rs.next()) {
-                String name = rs.getString("SCHEMA_NAME");
-                existeix = true;
-                //Retrieve by column name
+            try (ResultSet rs = stmt.executeQuery(sql)) {
+                //STEP 5: Extract data from result set
+                while (rs.next()) {
+                    String name = rs.getString("SCHEMA_NAME");
+                    existeix = true;
+                    //Retrieve by column name
+                }
             }
-            rs.close();
-        } catch (SQLException se) {
+        } catch (SQLException | ClassNotFoundException se) {
             //Handle errors for JDBC
-            se.printStackTrace();
-        } catch (Exception e) {
-            //Handle errors for Class.forName
-            e.printStackTrace();
-        } finally {
+
+        }
+        //Handle errors for Class.forName
+         finally {
             //finally block used to close resources
             try {
                 if (stmt != null) {
@@ -74,7 +74,6 @@ public class basedades {
                     conn.close();
                 }
             } catch (SQLException se) {
-                se.printStackTrace();
             }//end finally try
         }//end try
         return existeix;
@@ -123,10 +122,10 @@ public class basedades {
             System.out.println("Base de dades creada");
         } catch (SQLException se) {
             //Handle errors for JDBC
-            se.printStackTrace();
-        } catch (Exception e) {
+
+        } catch (ClassNotFoundException e) {
             //Handle errors for Class.forName
-            e.printStackTrace();
+
         } finally {
             //finally block used to close resources
             try {
@@ -140,7 +139,6 @@ public class basedades {
                     conn.close();
                 }
             } catch (SQLException se) {
-                se.printStackTrace();
             }//end finally try
         }//end try
 
@@ -167,10 +165,10 @@ public class basedades {
 
         } catch (SQLException se) {
             //Handle errors for JDBC
-            se.printStackTrace();
-        } catch (Exception e) {
+
+        } catch (ClassNotFoundException e) {
             //Handle errors for Class.forName
-            e.printStackTrace();
+
         } finally {
             //finally block used to close resources
             try {
@@ -184,7 +182,6 @@ public class basedades {
                     conn.close();
                 }
             } catch (SQLException se) {
-                se.printStackTrace();
             }//end finally try
         }//end try
     }
@@ -234,32 +231,32 @@ public class basedades {
             String usesql = "USE DBClass";
             stmt.executeUpdate(usesql);
             String sql = "SELECT id, nom, dni, adreca FROM estudiant";
-            ResultSet rs = stmt.executeQuery(sql);
             //STEP 5: Extract data from result set
-            while (rs.next()) {
-                /* 
-                Posició 0: ID
-                Posició 1: Nom
-                Posició 2: DNI
-                Posició 3: Adreça
-                 */
-                String[] estudiant = new String[4];
-                //Retrieve by column name
-                estudiant[0] = rs.getInt("id") + "";
-                estudiant[1] = rs.getString("nom");
-                estudiant[2] = rs.getString("dni");
-                estudiant[3] = rs.getString("adreca");
-
-                llistaEstudiants.add(estudiant);
+            try (ResultSet rs = stmt.executeQuery(sql)) {
+                //STEP 5: Extract data from result set
+                while (rs.next()) {
+                    /*
+                    Posició 0: ID
+                    Posició 1: Nom
+                    Posició 2: DNI
+                    Posició 3: Adreça
+                    */
+                    String[] estudiant = new String[4];
+                    //Retrieve by column name
+                    estudiant[0] = rs.getInt("id") + "";
+                    estudiant[1] = rs.getString("nom");
+                    estudiant[2] = rs.getString("dni");
+                    estudiant[3] = rs.getString("adreca");
+                    
+                    llistaEstudiants.add(estudiant);
+                }
             }
-            rs.close();
-        } catch (SQLException se) {
+        } catch (SQLException | ClassNotFoundException se) {
             //Handle errors for JDBC
-            se.printStackTrace();
-        } catch (Exception e) {
-            //Handle errors for Class.forName
-            e.printStackTrace();
-        } finally {
+
+        }
+        //Handle errors for Class.forName
+         finally {
             //finally block used to close resources
             try {
                 if (stmt != null) {
@@ -272,7 +269,6 @@ public class basedades {
                     conn.close();
                 }
             } catch (SQLException se) {
-                se.printStackTrace();
             }//end finally try
         }//end try      
 
@@ -304,24 +300,25 @@ public class basedades {
             String usesql = "USE DBClass";
             stmt.executeUpdate(usesql);
             String sql = "SELECT c.id, c.any, p.nom as professor, a.nom as assignatura FROM curs c, professor p, assignatura a WHERE c.id_professor = p.id and c.id_assignatura = a.id";
-            ResultSet rs = stmt.executeQuery(sql);
             //STEP 5: Extract data from result set
-            while (rs.next()) {
-                String id = rs.getInt("id") + "";
-                String any = rs.getString("any");
-                String professor = rs.getString("professor");
-                String assignatura = rs.getString("assignatura");
-                Assignacio assignacio = new Assignacio(id, any, professor, assignatura);
-
-                llistaAssignacions.add(assignacio);
+            try (ResultSet rs = stmt.executeQuery(sql)) {
+                //STEP 5: Extract data from result set
+                while (rs.next()) {
+                    String id = rs.getInt("id") + "";
+                    String any = rs.getString("any");
+                    String professor = rs.getString("professor");
+                    String assignatura = rs.getString("assignatura");
+                    Assignacio assignacio = new Assignacio(id, any, professor, assignatura);
+                    
+                    llistaAssignacions.add(assignacio);
+                }
             }
-            rs.close();
         } catch (SQLException se) {
             //Handle errors for JDBC
-            se.printStackTrace();
-        } catch (Exception e) {
+
+        } catch (ClassNotFoundException e) {
             //Handle errors for Class.forName
-            e.printStackTrace();
+
         } finally {
             //finally block used to close resources
             try {
@@ -335,7 +332,6 @@ public class basedades {
                     conn.close();
                 }
             } catch (SQLException se) {
-                se.printStackTrace();
             }//end finally try
         }//end try      
 
@@ -367,26 +363,27 @@ public class basedades {
             String usesql = "USE DBClass";
             stmt.executeUpdate(usesql);
             String sql = "SELECT av.id, ass.nom as assnom, es.nom as esnom, av.nota, av.any FROM avaluacio av, assignatura ass, estudiant es WHERE av.id_assignatura = ass.id and av.id_estudiant = es.id";
-            ResultSet rs = stmt.executeQuery(sql);
             //STEP 5: Extract data from result set
-            while (rs.next()) {
-                String id = rs.getInt("id") + "";
-                String nomAssignatura = rs.getString("assnom");
-                String nomEstudiant = rs.getString("esnom");
-                String nota = rs.getString("nota");
-                String any = rs.getString("any");
-
-                Avaluacio avaluacio = new Avaluacio(id, nomAssignatura, nomEstudiant, nota, any);
-
-                llistaAssignatures.add(avaluacio);
+            try (ResultSet rs = stmt.executeQuery(sql)) {
+                //STEP 5: Extract data from result set
+                while (rs.next()) {
+                    String id = rs.getInt("id") + "";
+                    String nomAssignatura = rs.getString("assnom");
+                    String nomEstudiant = rs.getString("esnom");
+                    String nota = rs.getString("nota");
+                    String any = rs.getString("any");
+                    
+                    Avaluacio avaluacio = new Avaluacio(id, nomAssignatura, nomEstudiant, nota, any);
+                    
+                    llistaAssignatures.add(avaluacio);
+                }
             }
-            rs.close();
         } catch (SQLException se) {
             //Handle errors for JDBC
-            se.printStackTrace();
-        } catch (Exception e) {
+
+        } catch (ClassNotFoundException e) {
             //Handle errors for Class.forName
-            e.printStackTrace();
+
         } finally {
             //finally block used to close resources
             try {
@@ -400,7 +397,6 @@ public class basedades {
                     conn.close();
                 }
             } catch (SQLException se) {
-                se.printStackTrace();
             }//end finally try
         }//end try      
 
@@ -433,25 +429,26 @@ public class basedades {
             String usesql = "USE DBClass";
             stmt.executeUpdate(usesql);
             String sql = "SELECT id, nom, credits, descripcio FROM assignatura";
-            ResultSet rs = stmt.executeQuery(sql);
             //STEP 5: Extract data from result set
-            while (rs.next()) {
-                String id = rs.getInt("id") + "";
-                String nom = rs.getString("nom");
-                String credits = rs.getString("credits");
-                String descripcio = rs.getString("descripcio");
-
-                Assignatura assignatura = new Assignatura(nom, credits, descripcio, id);
-
-                llistaAssignatures.add(assignatura);
+            try (ResultSet rs = stmt.executeQuery(sql)) {
+                //STEP 5: Extract data from result set
+                while (rs.next()) {
+                    String id = rs.getInt("id") + "";
+                    String nom = rs.getString("nom");
+                    String credits = rs.getString("credits");
+                    String descripcio = rs.getString("descripcio");
+                    
+                    Assignatura assignatura = new Assignatura(nom, credits, descripcio, id);
+                    
+                    llistaAssignatures.add(assignatura);
+                }
             }
-            rs.close();
         } catch (SQLException se) {
             //Handle errors for JDBC
-            se.printStackTrace();
-        } catch (Exception e) {
+
+        } catch (ClassNotFoundException e) {
             //Handle errors for Class.forName
-            e.printStackTrace();
+
         } finally {
             //finally block used to close resources
             try {

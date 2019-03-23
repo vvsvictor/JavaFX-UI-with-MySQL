@@ -4,5 +4,6 @@
 
 
 .combo-box .cell{
-    -fx-text-fill:  #00adb5;
+    -fx-text-fill:  white;
+    -fx-background-color:  #222831;
 }

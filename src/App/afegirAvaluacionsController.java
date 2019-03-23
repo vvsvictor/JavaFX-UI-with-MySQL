@@ -1,9 +1,7 @@
 package App;
 
-import Classes.Alumne;
 import Classes.Assignatura;
 import Database.basedades;
-import static Database.basedades.afegirProfessor;
 import static Database.basedades.obtenirEstudiants;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
@@ -13,10 +11,6 @@ import com.jfoenix.validation.RequiredFieldValidator;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -29,9 +23,6 @@ import java.util.List;
 import javafx.scene.control.TextField;
 
 public class afegirAvaluacionsController implements Initializable {
-//    
-//    ObservableList<String> estidiantsList;
-//    
 
     @FXML
     private JFXComboBox<String> estudiantscb;

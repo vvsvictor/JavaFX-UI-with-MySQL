@@ -3,8 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/victo/Google%20Drive/DAM/M03%20Programació/UF6/P8_Vivancos_Victor/src/App/afegirAssignacionsController.java</file>
-            <file>file:/C:/Users/victo/Google%20Drive/DAM/M03%20Programació/UF6/P8_Vivancos_Victor/src/App/afegirAssignaturesController.java</file>
+            <file>file:/C:/Users/victo/Google%20Drive/DAM/M03%20Programació/UF6/P8_Vivancos_Victor/src/App/llistaAssignacionsController.java</file>
+            <file>file:/C:/Users/victo/Google%20Drive/DAM/M03%20Programació/UF6/P8_Vivancos_Victor/src/App/llistaAvaluacionsController.java</file>
+            <file>file:/C:/Users/victo/Google%20Drive/DAM/M03%20Programació/UF6/P8_Vivancos_Victor/src/App/llistaProfessorsController.java</file>
+            <file>file:/C:/Users/victo/Google%20Drive/DAM/M03%20Programació/UF6/P8_Vivancos_Victor/src/App/afegirProfessorsController.java</file>
+            <file>file:/C:/Users/victo/Google%20Drive/DAM/M03%20Programació/UF6/P8_Vivancos_Victor/src/App/llistaAssignaturesController.java</file>
+            <file>file:/C:/Users/victo/Google%20Drive/DAM/M03%20Programació/UF6/P8_Vivancos_Victor/src/App/afegirAvaluacionsController.java</file>
+            <file>file:/C:/Users/victo/Google%20Drive/DAM/M03%20Programació/UF6/P8_Vivancos_Victor/src/App/afegirAlumnesController.java</file>
         </group>
     </open-files>
 </project-private>
