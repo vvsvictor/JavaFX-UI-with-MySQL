@@ -1,10 +1,11 @@
 package App;
 
-
 import Classes.Assignatura;
 import Classes.Professor;
+import Database.basedadesH2;
+import Database.basedadesMysql;
+import Database.basedadesPostgreSQL;
 import Database.basedadesSqlite;
-import static Database.basedadesSqlite.*;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import java.io.IOException;
@@ -41,8 +42,30 @@ public class afegirAssignacionsController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         afegirAssignacionsBtn.setDisable(true);
+        String database = paginaInicial.getDatabase();
+        List professors;
+        List assignatures;
+        switch (database) {
+            case "H2":
+                professors = basedadesH2.obtenirProfessors();
+                assignatures = basedadesH2.obtenirAssignatures();
+                break;
+            case "MySQl":
+                professors = basedadesMysql.obtenirProfessors();
+                assignatures = basedadesMysql.obtenirAssignatures();
+                break;
+            case "SqLite":
+                professors = basedadesSqlite.obtenirProfessors();
+                assignatures = basedadesSqlite.obtenirAssignatures();
+                break;
+            case "PostgreSQL":
+                professors = basedadesPostgreSQL.obtenirProfessors();
+                assignatures = basedadesPostgreSQL.obtenirAssignatures();
+                break;
+            default:
+                throw new AssertionError();
+        }
 
-        List professors = basedadesSqlite.obtenirProfessors();
         for (int i = 0; i < professors.size(); i++) {
             Professor professor = (Professor) professors.get(i);
             String nom = professor.getId() + " - ";
@@ -50,7 +73,6 @@ public class afegirAssignacionsController implements Initializable {
             professorscb.getItems().add(nom);
         }
 
-        List assignatures = basedadesSqlite.obtenirAssignatures();
         for (int i = 0; i < assignatures.size(); i++) {
             Assignatura assignatura = (Assignatura) assignatures.get(i);
             String nom = assignatura.getId();
@@ -75,7 +97,24 @@ public class afegirAssignacionsController implements Initializable {
         assignatura = arrassignatura[0];
         int idAssignatura = Integer.parseInt(assignatura);
         int idProfessor = Integer.parseInt(professor);
-        afegirAssignacio(idProfessor, iCurs, idAssignatura);
+        String database = paginaInicial.getDatabase();
+        switch (database) {
+            case "H2":
+                basedadesH2.afegirAssignacio(idProfessor, iCurs, idAssignatura);
+                break;
+            case "MySQl":
+                basedadesMysql.afegirAssignacio(idProfessor, iCurs, idAssignatura);
+                break;
+            case "SqLite":
+                basedadesSqlite.afegirAssignacio(idProfessor, iCurs, idAssignatura);
+                break;
+            case "PostgreSQL":
+                basedadesPostgreSQL.afegirAssignacio(idProfessor, iCurs, idAssignatura);
+                break;
+            default:
+                throw new AssertionError();
+        }
+
 
         changeToAssignacionsScene(event);
     }

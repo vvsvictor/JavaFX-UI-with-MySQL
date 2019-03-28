@@ -1,6 +1,9 @@
 package App;
 
 import Classes.Professor;
+import Database.basedadesH2;
+import Database.basedadesMysql;
+import Database.basedadesPostgreSQL;
 import Database.basedadesSqlite;
 import java.io.IOException;
 import java.net.URL;
@@ -44,7 +47,26 @@ public class llistaProfessorsController implements Initializable {
 
     public ObservableList getProfessors() {
         ObservableList<Professor> professors = FXCollections.observableArrayList();
-        List llistaProfessors = basedadesSqlite.obtenirProfessors();
+        List llistaProfessors;
+
+        String database = paginaInicial.getDatabase();
+        //Multiple databases
+        switch (database) {
+            case "H2":
+                llistaProfessors = basedadesH2.obtenirProfessors();
+                break;
+            case "MySQl":
+                llistaProfessors = basedadesMysql.obtenirProfessors();
+                break;
+            case "SqLite":
+                llistaProfessors = basedadesSqlite.obtenirProfessors();
+                break;
+            case "PostgreSQL":
+                llistaProfessors = basedadesPostgreSQL.obtenirProfessors();
+                break;
+            default:
+                throw new AssertionError();
+        }
         for (int i = 0; i < llistaProfessors.size(); i++) {
             //Array amb les dades del professor
             Professor professor = (Professor) llistaProfessors.get(i);

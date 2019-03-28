@@ -1,8 +1,10 @@
 package App;
 
 import Classes.Assignatura;
+import Database.basedadesH2;
+import Database.basedadesMysql;
+import Database.basedadesPostgreSQL;
 import Database.basedadesSqlite;
-import static Database.basedadesSqlite.obtenirEstudiants;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
@@ -42,7 +44,31 @@ public class afegirAvaluacionsController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         afegirAvaluacionsBtn.setDisable(true);
-        List estudiants = obtenirEstudiants();
+        List estudiants;
+        List assignatures;
+
+        String database = paginaInicial.getDatabase();
+        //Multiple databases
+        switch (database) {
+            case "H2":
+                estudiants = basedadesH2.obtenirEstudiants();
+                assignatures = basedadesH2.obtenirAssignatures();
+                break;
+            case "MySQl":
+                estudiants = basedadesMysql.obtenirEstudiants();
+                assignatures = basedadesMysql.obtenirAssignatures();
+                break;
+            case "SqLite":
+                estudiants = basedadesSqlite.obtenirEstudiants();
+                assignatures = basedadesSqlite.obtenirAssignatures();
+                break;
+            case "PostgreSQL":
+                estudiants = basedadesPostgreSQL.obtenirEstudiants();
+                assignatures = basedadesPostgreSQL.obtenirAssignatures();
+                break;
+            default:
+                throw new AssertionError();
+        }
         NumberValidator numberValid = new NumberValidator();
         numberValid.setMessage("El valor introduït no és correcte");
         RequiredFieldValidator validator = new RequiredFieldValidator();
@@ -57,7 +83,6 @@ public class afegirAvaluacionsController implements Initializable {
             estudiantscb.getItems().add(nom);
         }
 
-        List assignatures = basedadesSqlite.obtenirAssignatures();
         for (int i = 0; i < assignatures.size(); i++) {
             Assignatura assignatura = (Assignatura) assignatures.get(i);
             String nom = assignatura.getId();
@@ -88,7 +113,7 @@ public class afegirAvaluacionsController implements Initializable {
                 }
 
             }
-        } catch (Exception e) {
+        } catch (NumberFormatException e) {
         }
 
     }
@@ -111,9 +136,9 @@ public class afegirAvaluacionsController implements Initializable {
 
     private boolean isDouble(TextField input) {
         try {
-            double dInput = Double.parseDouble(input.getText());
+           Double.parseDouble(input.getText());
             return true;
-        } catch (Exception e) {
+        } catch (NumberFormatException e) {
             return false;
         }
     }

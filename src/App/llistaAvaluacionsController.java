@@ -6,6 +6,9 @@
 package App;
 
 import Classes.Avaluacio;
+import Database.basedadesH2;
+import Database.basedadesMysql;
+import Database.basedadesPostgreSQL;
 import Database.basedadesSqlite;
 import java.io.IOException;
 import java.net.URL;
@@ -59,7 +62,26 @@ public class llistaAvaluacionsController implements Initializable {
 
     public ObservableList getNotes() {
         ObservableList<Avaluacio> avaluacions = FXCollections.observableArrayList();
-        List llistaAvaluacions = basedadesSqlite.obtenirAvaluacions();
+        List llistaAvaluacions;
+        String database = paginaInicial.getDatabase();
+        //Multiple databases
+        switch (database) {
+            case "H2":
+                llistaAvaluacions = basedadesH2.obtenirAvaluacions();
+                break;
+            case "MySQl":
+                llistaAvaluacions = basedadesMysql.obtenirAvaluacions();
+                break;
+            case "SqLite":
+                llistaAvaluacions = basedadesSqlite.obtenirAvaluacions();
+                break;
+            case "PostgreSQL":
+                llistaAvaluacions = basedadesPostgreSQL.obtenirAvaluacions();
+                break;
+            default:
+                throw new AssertionError();
+        }
+
         for (int i = 0; i < llistaAvaluacions.size(); i++) {
             //Array amb les dades del professor
             Avaluacio avaluacio = (Avaluacio) llistaAvaluacions.get(i);
@@ -100,7 +122,7 @@ public class llistaAvaluacionsController implements Initializable {
         window.setScene(professorsScene);
         window.show();
     }
-    
+
     public void changeToAfegirAvaluacions(ActionEvent event) throws IOException {
         Parent avaluacions = FXMLLoader.load(getClass().getResource("afegirAvaluacions.fxml"));
         Scene avaluacionsScene = new Scene(avaluacions, 1000, 700);

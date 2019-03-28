@@ -1,6 +1,9 @@
 package App;
 
-import static Database.basedadesSqlite.afegirProfessor;
+import Database.basedadesH2;
+import Database.basedadesMysql;
+import Database.basedadesPostgreSQL;
+import Database.basedadesSqlite;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.validation.RequiredFieldValidator;
@@ -38,21 +41,15 @@ public class afegirProfessorsController implements Initializable {
         departament.getValidators().add(validator);
         validator.setMessage("Falten valors d'entrada");
 
-        nomicognoms.focusedProperty().addListener(new ChangeListener<Boolean>() {
-            @Override
-            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldVAlue, Boolean newValue) {
-                if (!newValue) {
-                    nomicognoms.validate();
-                }
+        nomicognoms.focusedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldVAlue, Boolean newValue) -> {
+            if (!newValue) {
+                nomicognoms.validate();
             }
         });
 
-        departament.focusedProperty().addListener(new ChangeListener<Boolean>() {
-            @Override
-            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldVAlue, Boolean newValue) {
-                if (!newValue) {
-                    departament.validate();
-                }
+        departament.focusedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldVAlue, Boolean newValue) -> {
+            if (!newValue) {
+                departament.validate();
             }
         });
 
@@ -99,7 +96,24 @@ public class afegirProfessorsController implements Initializable {
     public void afegirProfessors(ActionEvent event) throws IOException {
         String sNomicognoms = nomicognoms.getText();
         String sDepartament = departament.getText();
-        afegirProfessor(sNomicognoms, sDepartament);
+        String database = paginaInicial.getDatabase();
+        //Multiple databases
+        switch (database) {
+            case "H2":
+                basedadesH2.afegirProfessor(sNomicognoms, sDepartament);
+                break;
+            case "MySQl":
+                basedadesMysql.afegirProfessor(sNomicognoms, sDepartament);
+                break;
+            case "SqLite":
+                basedadesSqlite.afegirProfessor(sNomicognoms, sDepartament);
+                break;
+            case "PostgreSQL":
+                basedadesPostgreSQL.afegirProfessor(sNomicognoms, sDepartament);
+                break;
+            default:
+                throw new AssertionError();
+        }
         Parent llistaAlumnes = FXMLLoader.load(getClass().getResource("llistaProfessors.fxml"));
         Scene afegirAlumneScene = new Scene(llistaAlumnes, 1000, 700);
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();

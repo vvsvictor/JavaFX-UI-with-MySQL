@@ -6,12 +6,15 @@
 package App;
 
 import Classes.*;
-import Database.*;
+import Database.basedadesH2;
+import Database.basedadesMysql;
+import Database.basedadesPostgreSQL;
+import Database.basedadesSqlite;
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
-import static javafx.application.ConditionalFeature.FXML;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -57,7 +60,26 @@ public class sceneAlumnesController implements Initializable {
 
     public ObservableList getAlumnes() {
         ObservableList<Alumne> alumnes = FXCollections.observableArrayList();
-        List llistaAlumnes = basedadesSqlite.obtenirEstudiants();
+        List llistaAlumnes;
+
+        String database = paginaInicial.getDatabase();
+        //Multiple databases
+        switch (database) {
+            case "H2":
+                llistaAlumnes = basedadesH2.obtenirEstudiants();
+                break;
+            case "MySQl":
+                llistaAlumnes = basedadesMysql.obtenirEstudiants();
+                break;
+            case "SqLite":
+                llistaAlumnes = basedadesSqlite.obtenirEstudiants();
+                break;
+            case "PostgreSQL":
+                llistaAlumnes = basedadesPostgreSQL.obtenirEstudiants();
+                break;
+            default:
+                throw new AssertionError();
+        }
         for (int i = 0; i < llistaAlumnes.size(); i++) {
             //Array amb les dades de l'alumne
             String[] alumne = (String[]) llistaAlumnes.get(i);

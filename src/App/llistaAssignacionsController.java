@@ -7,6 +7,9 @@ package App;
 
 import Classes.Assignacio;
 import Classes.Assignatura;
+import Database.basedadesH2;
+import Database.basedadesMysql;
+import Database.basedadesPostgreSQL;
 import Database.basedadesSqlite;
 import java.io.IOException;
 import java.net.URL;
@@ -59,7 +62,26 @@ public class llistaAssignacionsController implements Initializable {
 
     public ObservableList getAssignacions() {
         ObservableList<Assignacio> assignacions = FXCollections.observableArrayList();
-        List llistaAssignacions = basedadesSqlite.obtenirAssignacions();
+        List llistaAssignacions;
+        String database = paginaInicial.getDatabase();
+        //Multiple databases
+        switch (database) {
+            case "H2":
+                llistaAssignacions = basedadesH2.obtenirAssignacions();
+                break;
+            case "MySQl":
+                llistaAssignacions = basedadesMysql.obtenirAssignacions();
+                break;
+            case "SqLite":
+                llistaAssignacions = basedadesSqlite.obtenirAssignacions();
+                break;
+            case "PostgreSQL":
+                llistaAssignacions = basedadesPostgreSQL.obtenirAssignacions();
+                break;
+            default:
+                throw new AssertionError();
+        }
+
         for (int i = 0; i < llistaAssignacions.size(); i++) {
             //Array amb objectes assignacions
             Assignacio assignacio = (Assignacio) llistaAssignacions.get(i);
@@ -108,6 +130,7 @@ public class llistaAssignacionsController implements Initializable {
         window.setScene(professorsScene);
         window.show();
     }
+
     public void changeToAfegirAssignacionsScene(ActionEvent event) throws IOException {
         Parent professors = FXMLLoader.load(getClass().getResource("afegirAssignacions.fxml"));
         Scene professorsScene = new Scene(professors, 1000, 700);

@@ -5,7 +5,10 @@
  */
 package App;
 
-import static Database.basedadesSqlite.afegirAssignatura;
+import Database.basedadesH2;
+import Database.basedadesMysql;
+import Database.basedadesPostgreSQL;
+import Database.basedadesSqlite;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.validation.NumberValidator;
@@ -13,7 +16,6 @@ import com.jfoenix.validation.RequiredFieldValidator;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -56,32 +58,22 @@ public class afegirAssignaturesController implements Initializable {
         credits.getValidators().add(numberValid);
         credits.getValidators().add(validator);
 
-        nom.focusedProperty().addListener(new ChangeListener<Boolean>() {
-            @Override
-            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldVAlue, Boolean newValue) {
-                if (!newValue) {
-                    nom.validate();
-                }
+        nom.focusedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldVAlue, Boolean newValue) -> {
+            if (!newValue) {
+                nom.validate();
             }
         });
 //
-        descripcio.focusedProperty().addListener(new ChangeListener<Boolean>() {
-            @Override
-            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldVAlue, Boolean newValue) {
-                if (!newValue) {
-                    descripcio.validate();
-                }
+        descripcio.focusedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldVAlue, Boolean newValue) -> {
+            if (!newValue) {
+                descripcio.validate();
             }
         });
 
-        credits.focusedProperty().addListener(new ChangeListener<Boolean>() {
-            @Override
-            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldVAlue, Boolean newValue) {
-                if (!newValue) {
-                    credits.validate();
-                }
+        credits.focusedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldVAlue, Boolean newValue) -> {
+            if (!newValue) {
+                credits.validate();
             }
-
         });
     }
 
@@ -98,7 +90,7 @@ public class afegirAssignaturesController implements Initializable {
 
     private boolean isInt(TextField input) {
         try {
-            int credits = Integer.parseInt(input.getText());
+            Integer.parseInt(input.getText());
             return true;
         } catch (NumberFormatException e) {
             return false;
@@ -113,13 +105,29 @@ public class afegirAssignaturesController implements Initializable {
         window.show();
     }
 
-    
-
     public void afegirAssignatures(ActionEvent event) throws IOException {
         String sNom = nom.getText();
         String sDescripcio = descripcio.getText();
         String sCredits = credits.getText();
-        afegirAssignatura(sNom, sCredits, sDescripcio);
+        String database = paginaInicial.getDatabase();
+        //Multiple databases
+        switch (database) {
+            case "H2":
+                basedadesH2.afegirAssignatura(sNom, sCredits, sDescripcio);
+                break;
+            case "MySQl":
+                basedadesMysql.afegirAssignatura(sNom, sCredits, sDescripcio);
+                break;
+            case "SqLite":
+                basedadesSqlite.afegirAssignatura(sNom, sCredits, sDescripcio);
+                break;
+            case "PostgreSQL":
+                basedadesPostgreSQL.afegirAssignatura(sNom, sCredits, sDescripcio);
+                break;
+            default:
+                throw new AssertionError();
+        }
+
         Parent llistaAlumnes = FXMLLoader.load(getClass().getResource("llistaAssignatures.fxml"));
         Scene afegirAlumneScene = new Scene(llistaAlumnes, 1000, 700);
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -143,7 +151,7 @@ public class afegirAssignaturesController implements Initializable {
         window.setScene(afegirAlumneScene);
         window.show();
     }
-    
+
     public void changeToAvaluacionsScene(ActionEvent event) throws IOException {
         Parent professors = FXMLLoader.load(getClass().getResource("llistaAvaluacions.fxml"));
         Scene professorsScene = new Scene(professors, 1000, 700);
