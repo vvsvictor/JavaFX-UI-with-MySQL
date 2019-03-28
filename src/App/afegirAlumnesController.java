@@ -2,6 +2,7 @@ package App;
 
 import Database.basedadesH2;
 import Database.basedadesMysql;
+import Database.basedadesPostgreSQL;
 import Database.basedadesSqlite;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
@@ -150,10 +151,6 @@ public class afegirAlumnesController implements Initializable {
             default:
                 throw new AssertionError();
         }
-        if (paginaInicial) {
-
-        }
-        afegirEstudiant(sNomicognoms, sDNI, sAdreca);
         Parent llistaAlumnes = FXMLLoader.load(getClass().getResource("sb.fxml"));
         Scene afegirAlumneScene = new Scene(llistaAlumnes, 1000, 700);
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
