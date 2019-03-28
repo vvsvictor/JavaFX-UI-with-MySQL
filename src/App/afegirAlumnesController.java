@@ -1,7 +1,8 @@
-
 package App;
 
-import static Database.basedadesSqlite.*;
+import Database.basedadesH2;
+import Database.basedadesMysql;
+import Database.basedadesSqlite;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.validation.RequiredFieldValidator;
@@ -24,6 +25,7 @@ import javafx.stage.Stage;
  * @author Víctor Vivancos Serrano
  */
 public class afegirAlumnesController implements Initializable {
+
     //Boto javafx
     @FXML
     private JFXButton afegirAlumneBtn;
@@ -36,10 +38,12 @@ public class afegirAlumnesController implements Initializable {
 
     @FXML
     private JFXTextField adreca;
+
     /**
      * Mètode executat al inicialitzar
+     *
      * @param location
-     * @param resources 
+     * @param resources
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -129,6 +133,26 @@ public class afegirAlumnesController implements Initializable {
         String sNomicognoms = nomicognoms.getText();
         String sDNI = dni.getText();
         String sAdreca = adreca.getText();
+        String database = paginaInicial.getDatabase();
+        switch (database) {
+            case "H2":
+                basedadesH2.afegirEstudiant(sNomicognoms, sDNI, sAdreca);
+                break;
+            case "MySQl":
+                basedadesMysql.afegirEstudiant(sNomicognoms, sDNI, sAdreca);
+                break;
+            case "SqLite":
+                basedadesSqlite.afegirEstudiant(sNomicognoms, sDNI, sAdreca);
+                break;
+            case "PostgreSQL":
+                basedadesPostgreSQL.afegirEstudiant(sNomicognoms, sDNI, sAdreca);
+                break;
+            default:
+                throw new AssertionError();
+        }
+        if (paginaInicial) {
+
+        }
         afegirEstudiant(sNomicognoms, sDNI, sAdreca);
         Parent llistaAlumnes = FXMLLoader.load(getClass().getResource("sb.fxml"));
         Scene afegirAlumneScene = new Scene(llistaAlumnes, 1000, 700);

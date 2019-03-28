@@ -26,7 +26,7 @@ public class app extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException  {
         
-        Parent root = FXMLLoader.load(getClass().getResource("sb.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("paginainicial.fxml"));
 //        Button btn = new Button();
 //        btn.setText("Say 'Hello World'");
 //        btn.setOnAction(new EventHandler<ActionEvent>() {
