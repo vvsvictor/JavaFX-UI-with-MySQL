@@ -1,7 +1,7 @@
 package App;
 
 import Classes.Professor;
-import Database.basedades;
+import Database.basedadesSqlite;
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
@@ -44,7 +44,7 @@ public class llistaProfessorsController implements Initializable {
 
     public ObservableList getProfessors() {
         ObservableList<Professor> professors = FXCollections.observableArrayList();
-        List llistaProfessors = basedades.obtenirProfessors();
+        List llistaProfessors = basedadesSqlite.obtenirProfessors();
         for (int i = 0; i < llistaProfessors.size(); i++) {
             //Array amb les dades del professor
             Professor professor = (Professor) llistaProfessors.get(i);

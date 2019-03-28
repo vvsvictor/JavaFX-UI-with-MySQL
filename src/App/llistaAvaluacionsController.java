@@ -6,7 +6,7 @@
 package App;
 
 import Classes.Avaluacio;
-import Database.basedades;
+import Database.basedadesSqlite;
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
@@ -59,7 +59,7 @@ public class llistaAvaluacionsController implements Initializable {
 
     public ObservableList getNotes() {
         ObservableList<Avaluacio> avaluacions = FXCollections.observableArrayList();
-        List llistaAvaluacions = basedades.obtenirAvaluacions();
+        List llistaAvaluacions = basedadesSqlite.obtenirAvaluacions();
         for (int i = 0; i < llistaAvaluacions.size(); i++) {
             //Array amb les dades del professor
             Avaluacio avaluacio = (Avaluacio) llistaAvaluacions.get(i);

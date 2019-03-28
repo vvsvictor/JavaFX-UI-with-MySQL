@@ -1,8 +1,8 @@
 package App;
 
 import Classes.Assignatura;
-import Database.basedades;
-import static Database.basedades.obtenirEstudiants;
+import Database.basedadesSqlite;
+import static Database.basedadesSqlite.obtenirEstudiants;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
@@ -57,7 +57,7 @@ public class afegirAvaluacionsController implements Initializable {
             estudiantscb.getItems().add(nom);
         }
 
-        List assignatures = basedades.obtenirAssignatures();
+        List assignatures = basedadesSqlite.obtenirAssignatures();
         for (int i = 0; i < assignatures.size(); i++) {
             Assignatura assignatura = (Assignatura) assignatures.get(i);
             String nom = assignatura.getId();
@@ -104,7 +104,7 @@ public class afegirAvaluacionsController implements Initializable {
         String[] arrAssignatura = assignatura.split(" - ");
         assignatura = arrAssignatura[0];
         int iAssignatura = Integer.parseInt(assignatura);
-        basedades.afegirAvaluacio(estudiant, iAssignatura, dNota, iCurs);
+        basedadesSqlite.afegirAvaluacio(estudiant, iAssignatura, dNota, iCurs);
 
         changeToAvaluacionsScene(event);
     }

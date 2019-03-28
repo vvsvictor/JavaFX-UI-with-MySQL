@@ -1,6 +1,6 @@
 package App;
 
-import static Database.basedades.afegirProfessor;
+import static Database.basedadesSqlite.afegirProfessor;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.validation.RequiredFieldValidator;

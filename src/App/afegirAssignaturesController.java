@@ -5,7 +5,7 @@
  */
 package App;
 
-import static Database.basedades.afegirAssignatura;
+import static Database.basedadesSqlite.afegirAssignatura;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.validation.NumberValidator;

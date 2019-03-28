@@ -1,7 +1,7 @@
 
 package App;
 
-import static Database.basedades.*;
+import static Database.basedadesSqlite.*;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.validation.RequiredFieldValidator;

@@ -1,23 +1,15 @@
 package App;
 
-import Classes.Alumne;
+
 import Classes.Assignatura;
 import Classes.Professor;
-import Database.basedades;
-import static Database.basedades.*;
-import static Database.basedades.obtenirEstudiants;
+import Database.basedadesSqlite;
+import static Database.basedadesSqlite.*;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
-import com.jfoenix.controls.JFXTextField;
-import com.jfoenix.validation.NumberValidator;
-import com.jfoenix.validation.RequiredFieldValidator;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -50,7 +42,7 @@ public class afegirAssignacionsController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         afegirAssignacionsBtn.setDisable(true);
 
-        List professors = basedades.obtenirProfessors();
+        List professors = basedadesSqlite.obtenirProfessors();
         for (int i = 0; i < professors.size(); i++) {
             Professor professor = (Professor) professors.get(i);
             String nom = professor.getId() + " - ";
@@ -58,7 +50,7 @@ public class afegirAssignacionsController implements Initializable {
             professorscb.getItems().add(nom);
         }
 
-        List assignatures = basedades.obtenirAssignatures();
+        List assignatures = basedadesSqlite.obtenirAssignatures();
         for (int i = 0; i < assignatures.size(); i++) {
             Assignatura assignatura = (Assignatura) assignatures.get(i);
             String nom = assignatura.getId();

@@ -7,7 +7,7 @@ package App;
 
 import Classes.Assignacio;
 import Classes.Assignatura;
-import Database.basedades;
+import Database.basedadesSqlite;
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
@@ -59,7 +59,7 @@ public class llistaAssignacionsController implements Initializable {
 
     public ObservableList getAssignacions() {
         ObservableList<Assignacio> assignacions = FXCollections.observableArrayList();
-        List llistaAssignacions = basedades.obtenirAssignacions();
+        List llistaAssignacions = basedadesSqlite.obtenirAssignacions();
         for (int i = 0; i < llistaAssignacions.size(); i++) {
             //Array amb objectes assignacions
             Assignacio assignacio = (Assignacio) llistaAssignacions.get(i);

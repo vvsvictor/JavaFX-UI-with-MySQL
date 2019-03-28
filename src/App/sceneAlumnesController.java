@@ -57,7 +57,7 @@ public class sceneAlumnesController implements Initializable {
 
     public ObservableList getAlumnes() {
         ObservableList<Alumne> alumnes = FXCollections.observableArrayList();
-        List llistaAlumnes = basedades.obtenirEstudiants();
+        List llistaAlumnes = basedadesSqlite.obtenirEstudiants();
         for (int i = 0; i < llistaAlumnes.size(); i++) {
             //Array amb les dades de l'alumne
             String[] alumne = (String[]) llistaAlumnes.get(i);
