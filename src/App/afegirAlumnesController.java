@@ -130,7 +130,6 @@ public class afegirAlumnesController implements Initializable {
     }
 
     public void afegirAlumne(ActionEvent event) throws IOException {
-
         String sNomicognoms = nomicognoms.getText();
         String sDNI = dni.getText();
         String sAdreca = adreca.getText();

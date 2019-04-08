@@ -9,8 +9,6 @@ import Classes.Assignacio;
 import Classes.Assignatura;
 import Classes.Avaluacio;
 import Classes.Professor;
-import static Database.basedadesMysql.DB_URL;
-import static Database.basedadesMysql.executarQuery;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -35,7 +33,7 @@ public class basedadesH2 {
      *
      * @param query
      */
-    public static void executarQuery(String query) {
+    public static boolean executarQuery(String query) {
         Connection conn = null;
         Statement stmt = null;
         try {
@@ -46,16 +44,17 @@ public class basedadesH2 {
             System.out.println("Connecting to database...");
             conn = DriverManager.getConnection(DB_URL, USER, PASS);
             stmt = conn.createStatement();
-            stmt.executeUpdate("USE DBClass");
             stmt.executeUpdate(query);
 
-        } catch (SQLException se) {
+            return true;
+
+        } catch (SQLException | ClassNotFoundException se) {
             //Handle errors for JDBC
+            return false;
 
-        } catch (ClassNotFoundException e) {
-            //Handle errors for Class.forName
-
-        } finally {
+        }
+        //Handle errors for Class.forName
+         finally {
             //finally block used to close resources
             try {
                 if (stmt != null) {
@@ -79,9 +78,9 @@ public class basedadesH2 {
      * @param dni
      * @param adreca
      */
-    public static void afegirEstudiant(String nom, String dni, String adreca) {
+    public static boolean afegirEstudiant(String nom, String dni, String adreca) {
 
-        executarQuery("INSERT INTO estudiant (nom, dni, adreca) VALUES ('" + nom + "','" + dni + "','" + adreca + "')");
+        return executarQuery("INSERT INTO estudiant (nom, dni, adreca) VALUES ('" + nom + "','" + dni + "','" + adreca + "')");
     }
 
     /**
@@ -91,8 +90,8 @@ public class basedadesH2 {
      * @param curs
      * @param assignatura
      */
-    public static void afegirAssignacio(int idProfessor, int curs, int assignatura) {
-        executarQuery("INSERT INTO curs (any, id_professor, id_assignatura) VALUES ('" + curs + "','" + idProfessor + "','" + assignatura + "')");
+    public static boolean afegirAssignacio(int idProfessor, int curs, int assignatura) {
+        return executarQuery("INSERT INTO curs (any, id_professor, id_assignatura) VALUES ('" + curs + "','" + idProfessor + "','" + assignatura + "')");
     }
 
     /**
@@ -116,8 +115,6 @@ public class basedadesH2 {
             //STEP 4: Execute a query
             System.out.println("Creating statement...");
             stmt = conn.createStatement();
-            String usesql = "USE DBClass";
-            stmt.executeUpdate(usesql);
             String sql = "SELECT id, nom, dni, adreca FROM estudiant";
             //STEP 5: Extract data from result set
             try (ResultSet rs = stmt.executeQuery(sql)) {
@@ -184,8 +181,6 @@ public class basedadesH2 {
             //STEP 4: Execute a query
             System.out.println("Creating statement...");
             stmt = conn.createStatement();
-            String usesql = "USE DBClass";
-            stmt.executeUpdate(usesql);
             String sql = "SELECT c.id, c.any, p.nom as professor, a.nom as assignatura FROM curs c, professor p, assignatura a WHERE c.id_professor = p.id and c.id_assignatura = a.id";
             //STEP 5: Extract data from result set
             try (ResultSet rs = stmt.executeQuery(sql)) {
@@ -200,13 +195,12 @@ public class basedadesH2 {
                     llistaAssignacions.add(assignacio);
                 }
             }
-        } catch (SQLException se) {
+        } catch (SQLException | ClassNotFoundException se) {
             //Handle errors for JDBC
 
-        } catch (ClassNotFoundException e) {
-            //Handle errors for Class.forName
-
-        } finally {
+        }
+        //Handle errors for Class.forName
+         finally {
             //finally block used to close resources
             try {
                 if (stmt != null) {
@@ -247,8 +241,6 @@ public class basedadesH2 {
             //STEP 4: Execute a query
             System.out.println("Creating statement...");
             stmt = conn.createStatement();
-            String usesql = "USE DBClass";
-            stmt.executeUpdate(usesql);
             String sql = "SELECT av.id, ass.nom as assnom, es.nom as esnom, av.nota, av.any FROM avaluacio av, assignatura ass, estudiant es WHERE av.id_assignatura = ass.id and av.id_estudiant = es.id";
             //STEP 5: Extract data from result set
             try (ResultSet rs = stmt.executeQuery(sql)) {
@@ -313,8 +305,6 @@ public class basedadesH2 {
             //STEP 4: Execute a query
             System.out.println("Creating statement...");
             stmt = conn.createStatement();
-            String usesql = "USE DBClass";
-            stmt.executeUpdate(usesql);
             String sql = "SELECT id, nom, credits, descripcio FROM assignatura";
             //STEP 5: Extract data from result set
             try (ResultSet rs = stmt.executeQuery(sql)) {
@@ -378,8 +368,6 @@ public class basedadesH2 {
             //STEP 4: Execute a query
             System.out.println("Creating statement...");
             stmt = conn.createStatement();
-            String usesql = "USE DBClass";
-            stmt.executeUpdate(usesql);
             String sql = "SELECT id, nom, departament FROM professor";
             ResultSet rs = stmt.executeQuery(sql);
             //STEP 5: Extract data from result set
@@ -432,9 +420,9 @@ public class basedadesH2 {
      * @param curs
      * @param dNota
      */
-    public static void afegirAvaluacio(String DNIestudiant, int idAssignatura, double dNota, int any) {
+    public static boolean afegirAvaluacio(String DNIestudiant, int idAssignatura, double dNota, int any) {
         int idEstudiant = obtenirIDEstudiant(DNIestudiant);
-        executarQuery("INSERT INTO avaluacio (id_assignatura, id_estudiant, nota, any) VALUES (" + idAssignatura + "," + idEstudiant + "," + dNota + "," + any + ")");
+        return executarQuery("INSERT INTO avaluacio (id_assignatura, id_estudiant, nota, any) VALUES (" + idAssignatura + "," + idEstudiant + "," + dNota + "," + any + ")");
     }
 
     /**
@@ -459,8 +447,6 @@ public class basedadesH2 {
             //STEP 4: Execute a query
             System.out.println("Creating statement...");
             stmt = conn.createStatement();
-            String usesql = "USE DBClass";
-            stmt.executeUpdate(usesql);
             String sql = "SELECT id FROM estudiant WHERE dni='" + DNI + "'";
             ResultSet rs = stmt.executeQuery(sql);
             //STEP 5: Extract data from result set
@@ -472,10 +458,10 @@ public class basedadesH2 {
             rs.close();
         } catch (SQLException se) {
             //Handle errors for JDBC
-            se.printStackTrace();
-        } catch (Exception e) {
+
+        } catch (ClassNotFoundException e) {
             //Handle errors for Class.forName
-            e.printStackTrace();
+
         } finally {
             //finally block used to close resources
             try {
@@ -502,8 +488,8 @@ public class basedadesH2 {
      * @param credits
      * @param descripcio
      */
-    public static void afegirAssignatura(String nom, String credits, String descripcio) {
-        executarQuery("INSERT INTO assignatura (nom, credits, descripcio) VALUES ('" + nom + "'," + credits + ",'" + descripcio + "')");
+    public static boolean afegirAssignatura(String nom, String credits, String descripcio) {
+        return executarQuery("INSERT INTO assignatura (nom, credits, descripcio) VALUES ('" + nom + "'," + credits + ",'" + descripcio + "')");
     }
 
     /**
@@ -512,8 +498,8 @@ public class basedadesH2 {
      * @param nom
      * @param departament
      */
-    public static void afegirProfessor(String nom, String departament) {
-        executarQuery("INSERT INTO professor (nom, departament) VALUES ('" + nom + "','" + departament + "')");
+    public static boolean afegirProfessor(String nom, String departament) {
+        return executarQuery("INSERT INTO professor (nom, departament) VALUES ('" + nom + "','" + departament + "')");
     }
 
 }

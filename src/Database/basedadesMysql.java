@@ -148,8 +148,9 @@ public class basedadesMysql {
      * Mètode per executar una sentència SQL
      *
      * @param query
+     * @return Comprovació d'execució correcte
      */
-    public static void executarQuery(String query) {
+    public static boolean executarQuery(String query) {
         Connection conn = null;
         Statement stmt = null;
         try {
@@ -162,12 +163,15 @@ public class basedadesMysql {
             stmt = conn.createStatement();
             stmt.executeUpdate("USE DBClass");
             stmt.executeUpdate(query);
+            return true;
 
         } catch (SQLException se) {
             //Handle errors for JDBC
+            return false;
 
         } catch (ClassNotFoundException e) {
             //Handle errors for Class.forName
+            return false;
 
         } finally {
             //finally block used to close resources
@@ -182,7 +186,9 @@ public class basedadesMysql {
                     conn.close();
                 }
             } catch (SQLException se) {
+                
             }//end finally try
+          
         }//end try
     }
 
@@ -192,10 +198,11 @@ public class basedadesMysql {
      * @param nom
      * @param dni
      * @param adreca
+     * @return Comrpovació d'execució correcte
      */
-    public static void afegirEstudiant(String nom, String dni, String adreca) {
+    public static boolean afegirEstudiant(String nom, String dni, String adreca) {
 
-        executarQuery("INSERT INTO estudiant (nom, dni, adreca) VALUES ('" + nom + "','" + dni + "','" + adreca + "')");
+        return executarQuery("INSERT INTO estudiant (nom, dni, adreca) VALUES ('" + nom + "','" + dni + "','" + adreca + "')");
     }
     /**
      * Mètode per afegir una assignació
@@ -203,8 +210,8 @@ public class basedadesMysql {
      * @param curs
      * @param assignatura 
      */
-    public static void afegirAssignacio(int idProfessor, int curs, int assignatura){
-           executarQuery("INSERT INTO curs (any, id_professor, id_assignatura) VALUES ('" + curs + "','" + idProfessor + "','" + assignatura + "')");
+    public static boolean afegirAssignacio(int idProfessor, int curs, int assignatura){
+           return executarQuery("INSERT INTO curs (any, id_professor, id_assignatura) VALUES ('" + curs + "','" + idProfessor + "','" + assignatura + "')");
     }
 
     /**
@@ -545,9 +552,9 @@ public class basedadesMysql {
      * @param curs
      * @param dNota
      */
-    public static void afegirAvaluacio(String DNIestudiant, int idAssignatura, double dNota, int any) {
+    public static boolean afegirAvaluacio(String DNIestudiant, int idAssignatura, double dNota, int any) {
         int idEstudiant = obtenirIDEstudiant(DNIestudiant);
-        executarQuery("INSERT INTO avaluacio (id_assignatura, id_estudiant, nota, any) VALUES (" + idAssignatura + "," + idEstudiant + "," + dNota + "," + any + ")");
+        return executarQuery("INSERT INTO avaluacio (id_assignatura, id_estudiant, nota, any) VALUES (" + idAssignatura + "," + idEstudiant + "," + dNota + "," + any + ")");
     }
 
     /**
@@ -615,8 +622,8 @@ public class basedadesMysql {
      * @param credits
      * @param descripcio
      */
-    public static void afegirAssignatura(String nom, String credits, String descripcio) {
-        executarQuery("INSERT INTO assignatura (nom, credits, descripcio) VALUES ('" + nom + "'," + credits + ",'" + descripcio + "')");
+    public static boolean afegirAssignatura(String nom, String credits, String descripcio) {
+        return executarQuery("INSERT INTO assignatura (nom, credits, descripcio) VALUES ('" + nom + "'," + credits + ",'" + descripcio + "')");
     }
 
     /**
@@ -625,8 +632,8 @@ public class basedadesMysql {
      * @param nom
      * @param departament
      */
-    public static void afegirProfessor(String nom, String departament) {
-        executarQuery("INSERT INTO professor (nom, departament) VALUES ('" + nom + "','" + departament + "')");
+    public static boolean afegirProfessor(String nom, String departament) {
+        return executarQuery("INSERT INTO professor (nom, departament) VALUES ('" + nom + "','" + departament + "')");
     }
 
     /**

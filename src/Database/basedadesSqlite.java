@@ -85,8 +85,9 @@ public class basedadesSqlite {
      * Mètode per executar una sentència SQL
      *
      * @param query
+     * @throws java.sql.SQLException
      */
-    public static void executarQuery(String query) throws SQLException {
+    public static boolean executarQuery(String query) throws SQLException {
         Connection conn = null;
         Statement stmt = null;
         try {
@@ -99,10 +100,11 @@ public class basedadesSqlite {
             conn.setAutoCommit(false);
             stmt = conn.createStatement();
             stmt.executeUpdate(query);
+            return true;
 
         } catch (SQLException | ClassNotFoundException se) {
             //Handle errors for JDBC
-
+            return false;
         } //Handle errors for Class.forName
         finally {
             //finally block used to close resources
@@ -120,10 +122,11 @@ public class basedadesSqlite {
      * @param adreca
      * @throws java.sql.SQLException
      */
-    public static void afegirEstudiant(String nom, String dni, String adreca) {
+    public static boolean afegirEstudiant(String nom, String dni, String adreca) {
         try {
-            executarQuery("INSERT INTO estudiant (nom, dni, adreca) VALUES ('" + nom + "','" + dni + "','" + adreca + "');");
-        } catch (Exception e) {
+            return executarQuery("INSERT INTO estudiant (nom, dni, adreca) VALUES ('" + nom + "','" + dni + "','" + adreca + "');");
+        } catch (SQLException e) {
+            return false;
         }
 
     }
@@ -135,11 +138,12 @@ public class basedadesSqlite {
      * @param curs
      * @param assignatura
      */
-    public static void afegirAssignacio(int idProfessor, int curs, int assignatura) {
+    public static boolean afegirAssignacio(int idProfessor, int curs, int assignatura) {
         try {
-            executarQuery("INSERT INTO curs (any, id_professor, id_assignatura) VALUES ('" + curs + "','" + idProfessor + "','" + assignatura + "');");
-            System.out.println("INSERT INTO curs (any, id_professor, id_assignatura) VALUES ('" + curs + "','" + idProfessor + "','" + assignatura + "');");
-        } catch (Exception e) {
+            return executarQuery("INSERT INTO curs (any, id_professor, id_assignatura) VALUES ('" + curs + "','" + idProfessor + "','" + assignatura + "');");
+
+        } catch (SQLException e) {
+            return false;
         }
 
     }
@@ -471,13 +475,14 @@ public class basedadesSqlite {
      * @param curs
      * @param dNota
      */
-    public static void afegirAvaluacio(String DNIestudiant, int idAssignatura, double dNota, int any) {
+    public static boolean afegirAvaluacio(String DNIestudiant, int idAssignatura, double dNota, int any) {
         try {
             int idEstudiant = obtenirIDEstudiant(DNIestudiant);
-        executarQuery("INSERT INTO avaluacio (id_assignatura, id_estudiant, nota, any) VALUES (" + idAssignatura + "," + idEstudiant + "," + dNota + "," + any + ");");
+            return executarQuery("INSERT INTO avaluacio (id_assignatura, id_estudiant, nota, any) VALUES (" + idAssignatura + "," + idEstudiant + "," + dNota + "," + any + ");");
         } catch (Exception e) {
+            return false;
         }
-        
+
     }
 
     /**
@@ -543,12 +548,13 @@ public class basedadesSqlite {
      * @param credits
      * @param descripcio
      */
-    public static void afegirAssignatura(String nom, String credits, String descripcio) {
+    public static boolean afegirAssignatura(String nom, String credits, String descripcio) {
         try {
-            executarQuery("INSERT INTO assignatura (nom, credits, descripcio) VALUES ('" + nom + "'," + credits + ",'" + descripcio + "');");
+            return executarQuery("INSERT INTO assignatura (nom, credits, descripcio) VALUES ('" + nom + "'," + credits + ",'" + descripcio + "');");
         } catch (Exception e) {
+            return false;
         }
-        
+
     }
 
     /**
@@ -557,12 +563,13 @@ public class basedadesSqlite {
      * @param nom
      * @param departament
      */
-    public static void afegirProfessor(String nom, String departament)  {
+    public static boolean afegirProfessor(String nom, String departament) {
         try {
-            executarQuery("INSERT INTO professor (nom, departament) VALUES ('" + nom + "','" + departament + "');");
+            return executarQuery("INSERT INTO professor (nom, departament) VALUES ('" + nom + "','" + departament + "');");
         } catch (Exception e) {
+            return false;
         }
-        
+
     }
 
     /**

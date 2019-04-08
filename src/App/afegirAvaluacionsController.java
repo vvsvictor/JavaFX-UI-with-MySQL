@@ -113,7 +113,7 @@ public class afegirAvaluacionsController implements Initializable {
                 }
 
             }
-        } catch (NumberFormatException e) {
+        } catch (Exception e) {
         }
 
     }
@@ -129,14 +129,31 @@ public class afegirAvaluacionsController implements Initializable {
         String[] arrAssignatura = assignatura.split(" - ");
         assignatura = arrAssignatura[0];
         int iAssignatura = Integer.parseInt(assignatura);
-        basedadesSqlite.afegirAvaluacio(estudiant, iAssignatura, dNota, iCurs);
+        String database = paginaInicial.getDatabase();
+        //Multiple databases
+        switch (database) {
+            case "H2":
+                basedadesH2.afegirAvaluacio(estudiant, iAssignatura, dNota, iCurs);
+                break;
+            case "MySQl":
+                basedadesMysql.afegirAvaluacio(estudiant, iAssignatura, dNota, iCurs);
+                break;
+            case "SqLite":
+                basedadesSqlite.afegirAvaluacio(estudiant, iAssignatura, dNota, iCurs);
+                break;
+            case "PostgreSQL":
+                basedadesPostgreSQL.afegirAvaluacio(estudiant, iAssignatura, dNota, iCurs);
+                break;
+            default:
+                throw new AssertionError();
+        }
 
         changeToAvaluacionsScene(event);
     }
 
     private boolean isDouble(TextField input) {
         try {
-           Double.parseDouble(input.getText());
+            Double.parseDouble(input.getText());
             return true;
         } catch (NumberFormatException e) {
             return false;

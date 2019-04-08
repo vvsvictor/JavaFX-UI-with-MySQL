@@ -113,20 +113,19 @@ public class basedadesPostgreSQL {
             String sqlprofessor = "CREATE TABLE professor( id int not null auto_increment PRIMARY KEY, nom varchar(255), departament varchar(255) )";
             stmt.executeUpdate(sqlprofessor);
 
-            String sqlavaluacio = "CREATE TABLE avaluacio( id int not null auto_increment PRIMARY KEY, id_assignatura int NOT NULL, id_estudiant int NOT NULL, nota float, any int, FOREIGN KEY (id_assignatura) REFERENCES assignatura(id), FOREIGN KEY (id_estudiant) REFERENCES estudiant(id) )";
+            String sqlavaluacio = "CREATE TABLE avaluacio( id int not null auto_increment PRIMARY KEY, id_assignatura int NOT NULL, id_estudiant int NOT NULL, nota float, year int, FOREIGN KEY (id_assignatura) REFERENCES assignatura(id), FOREIGN KEY (id_estudiant) REFERENCES estudiant(id) )";
             stmt.executeUpdate(sqlavaluacio);
 
-            String sqlcurs = "CREATE TABLE curs( id int not null auto_increment PRIMARY KEY, any int, id_professor int NOT NULL, id_assignatura int NOT NULL, FOREIGN KEY (id_assignatura) REFERENCES assignatura(id), FOREIGN KEY (id_professor) REFERENCES professor(id) )";
+            String sqlcurs = "CREATE TABLE curs( id int not null auto_increment PRIMARY KEY, year int, id_professor int NOT NULL, id_assignatura int NOT NULL, FOREIGN KEY (id_assignatura) REFERENCES assignatura(id), FOREIGN KEY (id_professor) REFERENCES professor(id) )";
             stmt.executeUpdate(sqlcurs);
 
             System.out.println("Base de dades creada");
-        } catch (SQLException se) {
+        } catch (SQLException | ClassNotFoundException se) {
             //Handle errors for JDBC
 
-        } catch (ClassNotFoundException e) {
-            //Handle errors for Class.forName
-
-        } finally {
+        }
+        //Handle errors for Class.forName
+         finally {
             //finally block used to close resources
             try {
                 if (stmt != null) {
@@ -148,8 +147,9 @@ public class basedadesPostgreSQL {
      * Mètode per executar una sentència SQL
      *
      * @param query
+     * @return Comprovació d'execució correcte
      */
-    public static void executarQuery(String query) {
+    public static boolean executarQuery(String query) {
         Connection conn = null;
         Statement stmt = null;
         try {
@@ -160,16 +160,16 @@ public class basedadesPostgreSQL {
             System.out.println("Connecting to database...");
             conn = DriverManager.getConnection(DB_URL, USER, PASS);
             stmt = conn.createStatement();
-            stmt.executeUpdate("USE DBClass");
             stmt.executeUpdate(query);
+            return true;
 
-        } catch (SQLException se) {
+        } catch (SQLException | ClassNotFoundException se) {
             //Handle errors for JDBC
+            return false;
 
-        } catch (ClassNotFoundException e) {
-            //Handle errors for Class.forName
-
-        } finally {
+        }
+        //Handle errors for Class.forName
+         finally {
             //finally block used to close resources
             try {
                 if (stmt != null) {
@@ -193,9 +193,9 @@ public class basedadesPostgreSQL {
      * @param dni
      * @param adreca
      */
-    public static void afegirEstudiant(String nom, String dni, String adreca) {
+    public static boolean  afegirEstudiant(String nom, String dni, String adreca) {
 
-        executarQuery("INSERT INTO estudiant (nom, dni, adreca) VALUES ('" + nom + "','" + dni + "','" + adreca + "')");
+       return executarQuery("INSERT INTO estudiant (nom, dni, adreca) VALUES ('" + nom + "','" + dni + "','" + adreca + "');");
     }
     /**
      * Mètode per afegir una assignació
@@ -203,8 +203,8 @@ public class basedadesPostgreSQL {
      * @param curs
      * @param assignatura 
      */
-    public static void afegirAssignacio(int idProfessor, int curs, int assignatura){
-           executarQuery("INSERT INTO curs (year, id_professor, id_assignatura) VALUES ('" + curs + "','" + idProfessor + "','" + assignatura + "')");
+    public static boolean afegirAssignacio(int idProfessor, int curs, int assignatura){
+           return executarQuery("INSERT INTO curs (year, id_professor, id_assignatura) VALUES ('" + curs + "','" + idProfessor + "','" + assignatura + "');");
     }
 
     /**
@@ -228,8 +228,6 @@ public class basedadesPostgreSQL {
             //STEP 4: Execute a query
             System.out.println("Creating statement...");
             stmt = conn.createStatement();
-            String usesql = "USE DBClass";
-            stmt.executeUpdate(usesql);
             String sql = "SELECT id, nom, dni, adreca FROM estudiant";
             //STEP 5: Extract data from result set
             try (ResultSet rs = stmt.executeQuery(sql)) {
@@ -297,18 +295,16 @@ public class basedadesPostgreSQL {
             //STEP 4: Execute a query
             System.out.println("Creating statement...");
             stmt = conn.createStatement();
-            String usesql = "USE DBClass";
-            stmt.executeUpdate(usesql);
             String sql = "SELECT c.id, c.year, p.nom as professor, a.nom as assignatura FROM curs c, professor p, assignatura a WHERE c.id_professor = p.id and c.id_assignatura = a.id";
             //STEP 5: Extract data from result set
             try (ResultSet rs = stmt.executeQuery(sql)) {
                 //STEP 5: Extract data from result set
                 while (rs.next()) {
                     String id = rs.getInt("id") + "";
-                    String any = rs.getString("year");
+                    String year = rs.getString("year");
                     String professor = rs.getString("professor");
                     String assignatura = rs.getString("assignatura");
-                    Assignacio assignacio = new Assignacio(id, any, professor, assignatura);
+                    Assignacio assignacio = new Assignacio(id, year, professor, assignatura);
                     
                     llistaAssignacions.add(assignacio);
                 }
@@ -360,8 +356,6 @@ public class basedadesPostgreSQL {
             //STEP 4: Execute a query
             System.out.println("Creating statement...");
             stmt = conn.createStatement();
-            String usesql = "USE DBClass";
-            stmt.executeUpdate(usesql);
             String sql = "SELECT av.id, ass.nom as assnom, es.nom as esnom, av.nota, av.year FROM avaluacio av, assignatura ass, estudiant es WHERE av.id_assignatura = ass.id and av.id_estudiant = es.id";
             //STEP 5: Extract data from result set
             try (ResultSet rs = stmt.executeQuery(sql)) {
@@ -371,20 +365,19 @@ public class basedadesPostgreSQL {
                     String nomAssignatura = rs.getString("assnom");
                     String nomEstudiant = rs.getString("esnom");
                     String nota = rs.getString("nota");
-                    String any = rs.getString("year");
+                    String year = rs.getString("year");
                     
-                    Avaluacio avaluacio = new Avaluacio(id, nomAssignatura, nomEstudiant, nota, any);
+                    Avaluacio avaluacio = new Avaluacio(id, nomAssignatura, nomEstudiant, nota, year);
                     
                     llistaAssignatures.add(avaluacio);
                 }
             }
-        } catch (SQLException se) {
+        } catch (SQLException | ClassNotFoundException se) {
             //Handle errors for JDBC
 
-        } catch (ClassNotFoundException e) {
-            //Handle errors for Class.forName
-
-        } finally {
+        }
+        //Handle errors for Class.forName
+         finally {
             //finally block used to close resources
             try {
                 if (stmt != null) {
@@ -426,8 +419,6 @@ public class basedadesPostgreSQL {
             //STEP 4: Execute a query
             System.out.println("Creating statement...");
             stmt = conn.createStatement();
-            String usesql = "USE DBClass";
-            stmt.executeUpdate(usesql);
             String sql = "SELECT id, nom, credits, descripcio FROM assignatura";
             //STEP 5: Extract data from result set
             try (ResultSet rs = stmt.executeQuery(sql)) {
@@ -491,8 +482,6 @@ public class basedadesPostgreSQL {
             //STEP 4: Execute a query
             System.out.println("Creating statement...");
             stmt = conn.createStatement();
-            String usesql = "USE DBClass";
-            stmt.executeUpdate(usesql);
             String sql = "SELECT id, nom, departament FROM professor";
             ResultSet rs = stmt.executeQuery(sql);
             //STEP 5: Extract data from result set
@@ -542,12 +531,15 @@ public class basedadesPostgreSQL {
      * Mètode per afegir una avaluació
      *
      * @param DNIestudiant
+     * @param idAssignatura
      * @param curs
+     * @param year
      * @param dNota
      */
-    public static void afegirAvaluacio(String DNIestudiant, int idAssignatura, double dNota, int any) {
+    public static boolean afegirAvaluacio(String DNIestudiant, int idAssignatura, double dNota, int year) {
         int idEstudiant = obtenirIDEstudiant(DNIestudiant);
-        executarQuery("INSERT INTO avaluacio (id_assignatura, id_estudiant, nota, year) VALUES (" + idAssignatura + "," + idEstudiant + "," + dNota + "," + any + ")");
+        System.out.println("INSERT INTO avaluacio (id_assignatura, id_estudiant, nota, year) VALUES (" + idAssignatura + "," + idEstudiant + "," + dNota + "," + year + ");");
+        return executarQuery("INSERT INTO avaluacio (id_assignatura, id_estudiant, nota, year) VALUES (" + idAssignatura + "," + idEstudiant + "," + dNota + "," + year + ");");
     }
 
     /**
@@ -572,8 +564,6 @@ public class basedadesPostgreSQL {
             //STEP 4: Execute a query
             System.out.println("Creating statement...");
             stmt = conn.createStatement();
-            String usesql = "USE DBClass";
-            stmt.executeUpdate(usesql);
             String sql = "SELECT id FROM estudiant WHERE dni='" + DNI + "'";
             ResultSet rs = stmt.executeQuery(sql);
             //STEP 5: Extract data from result set
@@ -615,8 +605,8 @@ public class basedadesPostgreSQL {
      * @param credits
      * @param descripcio
      */
-    public static void afegirAssignatura(String nom, String credits, String descripcio) {
-        executarQuery("INSERT INTO assignatura (nom, credits, descripcio) VALUES ('" + nom + "'," + credits + ",'" + descripcio + "')");
+    public static boolean afegirAssignatura(String nom, String credits, String descripcio) {
+        return executarQuery("INSERT INTO assignatura (nom, credits, descripcio) VALUES ('" + nom + "'," + credits + ",'" + descripcio + "');");
     }
 
     /**
@@ -625,8 +615,8 @@ public class basedadesPostgreSQL {
      * @param nom
      * @param departament
      */
-    public static void afegirProfessor(String nom, String departament) {
-        executarQuery("INSERT INTO professor (nom, departament) VALUES ('" + nom + "','" + departament + "')");
+    public static boolean afegirProfessor(String nom, String departament) {
+        return executarQuery("INSERT INTO professor (nom, departament) VALUES ('" + nom + "','" + departament + "');");
     }
 
     /**
