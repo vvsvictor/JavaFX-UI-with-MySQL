@@ -66,6 +66,7 @@ public class basedadesSqlite {
         finally {
             //finally block used to close resources
             try {
+                assert conn!=null;
                 if (stmt != null) {
                     conn.close();
                 }
@@ -85,6 +86,7 @@ public class basedadesSqlite {
      * Mètode per executar una sentència SQL
      *
      * @param query
+     * @return
      * @throws java.sql.SQLException
      */
     public static boolean executarQuery(String query) throws SQLException {
@@ -108,6 +110,8 @@ public class basedadesSqlite {
         } //Handle errors for Class.forName
         finally {
             //finally block used to close resources
+            assert stmt!=null;
+            assert conn!=null;
             stmt.close();
             conn.commit();
             conn.close();
@@ -120,7 +124,7 @@ public class basedadesSqlite {
      * @param nom
      * @param dni
      * @param adreca
-     * @throws java.sql.SQLException
+     * @return
      */
     public static boolean afegirEstudiant(String nom, String dni, String adreca) {
         try {
@@ -137,6 +141,7 @@ public class basedadesSqlite {
      * @param idProfessor
      * @param curs
      * @param assignatura
+     * @return
      */
     public static boolean afegirAssignacio(int idProfessor, int curs, int assignatura) {
         try {
@@ -197,6 +202,7 @@ public class basedadesSqlite {
         finally {
             //finally block used to close resources
             try {
+                
                 if (stmt != null) {
                     conn.close();
                 }
@@ -249,13 +255,11 @@ public class basedadesSqlite {
                     llistaAssignacions.add(assignacio);
                 }
             }
-        } catch (SQLException se) {
+        } catch (SQLException | ClassNotFoundException se) {
             //Handle errors for JDBC
 
-        } catch (ClassNotFoundException e) {
-            //Handle errors for Class.forName
-
-        } finally {
+        } //Handle errors for Class.forName
+        finally {
             //finally block used to close resources
             try {
                 if (stmt != null) {
@@ -312,13 +316,11 @@ public class basedadesSqlite {
                     llistaAssignatures.add(avaluacio);
                 }
             }
-        } catch (SQLException se) {
+        } catch (SQLException | ClassNotFoundException se) {
             //Handle errors for JDBC
 
-        } catch (ClassNotFoundException e) {
-            //Handle errors for Class.forName
-
-        } finally {
+        } //Handle errors for Class.forName
+        finally {
             //finally block used to close resources
             try {
                 if (stmt != null) {
@@ -375,13 +377,11 @@ public class basedadesSqlite {
                     llistaAssignatures.add(assignatura);
                 }
             }
-        } catch (SQLException se) {
+        } catch (SQLException | ClassNotFoundException se) {
             //Handle errors for JDBC
 
-        } catch (ClassNotFoundException e) {
-            //Handle errors for Class.forName
-
-        } finally {
+        } //Handle errors for Class.forName
+        finally {
             //finally block used to close resources
             try {
                 if (stmt != null) {
@@ -394,7 +394,6 @@ public class basedadesSqlite {
                     conn.close();
                 }
             } catch (SQLException se) {
-                se.printStackTrace();
             }//end finally try
         }//end try      
 
@@ -424,30 +423,29 @@ public class basedadesSqlite {
             System.out.println("Creating statement...");
             stmt = conn.createStatement();
             String sql = "SELECT id, nom, departament FROM professor";
-            ResultSet rs = stmt.executeQuery(sql);
             //STEP 5: Extract data from result set
-            while (rs.next()) {
-                /* 
-                Posició 0: ID
-                Posició 1: Nom
-                Posició 2: Departament
-                 */
-                String id = rs.getInt("id") + "";
-                String nom = rs.getString("nom");
-                String departament = rs.getString("departament");
+            try (ResultSet rs = stmt.executeQuery(sql)) {
+                //STEP 5: Extract data from result set
+                while (rs.next()) {
+                    /*
+                    Posició 0: ID
+                    Posició 1: Nom
+                    Posició 2: Departament
+                     */
+                    String id = rs.getInt("id") + "";
+                    String nom = rs.getString("nom");
+                    String departament = rs.getString("departament");
 
-                Professor professor = new Professor(id, nom, departament);
+                    Professor professor = new Professor(id, nom, departament);
 
-                llistaEstudiants.add(professor);
+                    llistaEstudiants.add(professor);
+                }
             }
-            rs.close();
-        } catch (SQLException se) {
+        } catch (SQLException | ClassNotFoundException se) {
             //Handle errors for JDBC
-            se.printStackTrace();
-        } catch (Exception e) {
-            //Handle errors for Class.forName
-            e.printStackTrace();
-        } finally {
+
+        } //Handle errors for Class.forName
+        finally {
             //finally block used to close resources
             try {
                 if (stmt != null) {
@@ -460,7 +458,6 @@ public class basedadesSqlite {
                     conn.close();
                 }
             } catch (SQLException se) {
-                se.printStackTrace();
             }//end finally try
         }//end try      
 
@@ -472,14 +469,16 @@ public class basedadesSqlite {
      * Mètode per afegir una avaluació
      *
      * @param DNIestudiant
-     * @param curs
+     * @param idAssignatura
+     * @param any
      * @param dNota
+     * @return
      */
     public static boolean afegirAvaluacio(String DNIestudiant, int idAssignatura, double dNota, int any) {
         try {
             int idEstudiant = obtenirIDEstudiant(DNIestudiant);
             return executarQuery("INSERT INTO avaluacio (id_assignatura, id_estudiant, nota, any) VALUES (" + idAssignatura + "," + idEstudiant + "," + dNota + "," + any + ");");
-        } catch (Exception e) {
+        } catch (SQLException e) {
             return false;
         }
 
@@ -508,21 +507,20 @@ public class basedadesSqlite {
             System.out.println("Creating statement...");
             stmt = conn.createStatement();
             String sql = "SELECT id FROM estudiant WHERE dni='" + DNI + "'";
-            ResultSet rs = stmt.executeQuery(sql);
             //STEP 5: Extract data from result set
-            while (rs.next()) {
+            try (ResultSet rs = stmt.executeQuery(sql)) {
+                //STEP 5: Extract data from result set
+                while (rs.next()) {
 
-                id = rs.getInt("id");
+                    id = rs.getInt("id");
 
+                }
             }
-            rs.close();
-        } catch (SQLException se) {
+        } catch (SQLException | ClassNotFoundException se) {
             //Handle errors for JDBC
-            se.printStackTrace();
-        } catch (Exception e) {
-            //Handle errors for Class.forName
-            e.printStackTrace();
-        } finally {
+
+        } //Handle errors for Class.forName
+        finally {
             //finally block used to close resources
             try {
                 if (stmt != null) {
@@ -535,7 +533,6 @@ public class basedadesSqlite {
                     conn.close();
                 }
             } catch (SQLException se) {
-                se.printStackTrace();
             }//end finally try
         }//end try      
         return id;
@@ -547,11 +544,12 @@ public class basedadesSqlite {
      * @param nom
      * @param credits
      * @param descripcio
+     * @return
      */
     public static boolean afegirAssignatura(String nom, String credits, String descripcio) {
         try {
             return executarQuery("INSERT INTO assignatura (nom, credits, descripcio) VALUES ('" + nom + "'," + credits + ",'" + descripcio + "');");
-        } catch (Exception e) {
+        } catch (SQLException e) {
             return false;
         }
 
@@ -562,11 +560,12 @@ public class basedadesSqlite {
      *
      * @param nom
      * @param departament
+     * @return
      */
     public static boolean afegirProfessor(String nom, String departament) {
         try {
             return executarQuery("INSERT INTO professor (nom, departament) VALUES ('" + nom + "','" + departament + "');");
-        } catch (Exception e) {
+        } catch (SQLException e) {
             return false;
         }
 

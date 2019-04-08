@@ -1,4 +1,3 @@
-
 package Database;
 
 import Classes.Assignacio;
@@ -13,9 +12,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class basedadesPostgreSQL {
-     // JDBC driver name and database URL
+    // JDBC driver name and database URL
+
     static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
     static final String DB_URL = "jdbc:postgresql://localhost:5432/dbclass";
 
@@ -59,11 +58,11 @@ public class basedadesPostgreSQL {
         } catch (SQLException | ClassNotFoundException se) {
             //Handle errors for JDBC
 
-        }
-        //Handle errors for Class.forName
-         finally {
+        } //Handle errors for Class.forName
+        finally {
             //finally block used to close resources
             try {
+                assert conn != null;
                 if (stmt != null) {
                     conn.close();
                 }
@@ -123,9 +122,8 @@ public class basedadesPostgreSQL {
         } catch (SQLException | ClassNotFoundException se) {
             //Handle errors for JDBC
 
-        }
-        //Handle errors for Class.forName
-         finally {
+        } //Handle errors for Class.forName
+        finally {
             //finally block used to close resources
             try {
                 if (stmt != null) {
@@ -167,9 +165,8 @@ public class basedadesPostgreSQL {
             //Handle errors for JDBC
             return false;
 
-        }
-        //Handle errors for Class.forName
-         finally {
+        } //Handle errors for Class.forName
+        finally {
             //finally block used to close resources
             try {
                 if (stmt != null) {
@@ -192,19 +189,23 @@ public class basedadesPostgreSQL {
      * @param nom
      * @param dni
      * @param adreca
+     * @return
      */
-    public static boolean  afegirEstudiant(String nom, String dni, String adreca) {
+    public static boolean afegirEstudiant(String nom, String dni, String adreca) {
 
-       return executarQuery("INSERT INTO estudiant (nom, dni, adreca) VALUES ('" + nom + "','" + dni + "','" + adreca + "');");
+        return executarQuery("INSERT INTO estudiant (nom, dni, adreca) VALUES ('" + nom + "','" + dni + "','" + adreca + "');");
     }
+
     /**
      * Mètode per afegir una assignació
+     *
      * @param idProfessor
      * @param curs
-     * @param assignatura 
+     * @param assignatura
+     * @return
      */
-    public static boolean afegirAssignacio(int idProfessor, int curs, int assignatura){
-           return executarQuery("INSERT INTO curs (year, id_professor, id_assignatura) VALUES ('" + curs + "','" + idProfessor + "','" + assignatura + "');");
+    public static boolean afegirAssignacio(int idProfessor, int curs, int assignatura) {
+        return executarQuery("INSERT INTO curs (year, id_professor, id_assignatura) VALUES ('" + curs + "','" + idProfessor + "','" + assignatura + "');");
     }
 
     /**
@@ -238,25 +239,25 @@ public class basedadesPostgreSQL {
                     Posició 1: Nom
                     Posició 2: DNI
                     Posició 3: Adreça
-                    */
+                     */
                     String[] estudiant = new String[4];
                     //Retrieve by column name
                     estudiant[0] = rs.getInt("id") + "";
                     estudiant[1] = rs.getString("nom");
                     estudiant[2] = rs.getString("dni");
                     estudiant[3] = rs.getString("adreca");
-                    
+
                     llistaEstudiants.add(estudiant);
                 }
             }
         } catch (SQLException | ClassNotFoundException se) {
             //Handle errors for JDBC
 
-        }
-        //Handle errors for Class.forName
-         finally {
+        } //Handle errors for Class.forName
+        finally {
             //finally block used to close resources
             try {
+                assert conn != null;
                 if (stmt != null) {
                     conn.close();
                 }
@@ -305,19 +306,18 @@ public class basedadesPostgreSQL {
                     String professor = rs.getString("professor");
                     String assignatura = rs.getString("assignatura");
                     Assignacio assignacio = new Assignacio(id, year, professor, assignatura);
-                    
+
                     llistaAssignacions.add(assignacio);
                 }
             }
-        } catch (SQLException se) {
+        } catch (SQLException | ClassNotFoundException se) {
             //Handle errors for JDBC
 
-        } catch (ClassNotFoundException e) {
-            //Handle errors for Class.forName
-
-        } finally {
+        } //Handle errors for Class.forName
+        finally {
             //finally block used to close resources
             try {
+                assert conn != null;
                 if (stmt != null) {
                     conn.close();
                 }
@@ -366,20 +366,20 @@ public class basedadesPostgreSQL {
                     String nomEstudiant = rs.getString("esnom");
                     String nota = rs.getString("nota");
                     String year = rs.getString("year");
-                    
+
                     Avaluacio avaluacio = new Avaluacio(id, nomAssignatura, nomEstudiant, nota, year);
-                    
+
                     llistaAssignatures.add(avaluacio);
                 }
             }
         } catch (SQLException | ClassNotFoundException se) {
             //Handle errors for JDBC
 
-        }
-        //Handle errors for Class.forName
-         finally {
+        } //Handle errors for Class.forName
+        finally {
             //finally block used to close resources
             try {
+                assert conn != null;
                 if (stmt != null) {
                     conn.close();
                 }
@@ -428,21 +428,20 @@ public class basedadesPostgreSQL {
                     String nom = rs.getString("nom");
                     String credits = rs.getString("credits");
                     String descripcio = rs.getString("descripcio");
-                    
+
                     Assignatura assignatura = new Assignatura(nom, credits, descripcio, id);
-                    
+
                     llistaAssignatures.add(assignatura);
                 }
             }
-        } catch (SQLException se) {
+        } catch (SQLException | ClassNotFoundException se) {
             //Handle errors for JDBC
 
-        } catch (ClassNotFoundException e) {
-            //Handle errors for Class.forName
-
-        } finally {
+        } //Handle errors for Class.forName
+        finally {
             //finally block used to close resources
             try {
+                assert conn != null;
                 if (stmt != null) {
                     conn.close();
                 }
@@ -453,7 +452,6 @@ public class basedadesPostgreSQL {
                     conn.close();
                 }
             } catch (SQLException se) {
-                se.printStackTrace();
             }//end finally try
         }//end try      
 
@@ -483,32 +481,32 @@ public class basedadesPostgreSQL {
             System.out.println("Creating statement...");
             stmt = conn.createStatement();
             String sql = "SELECT id, nom, departament FROM professor";
-            ResultSet rs = stmt.executeQuery(sql);
             //STEP 5: Extract data from result set
-            while (rs.next()) {
-                /* 
-                Posició 0: ID
-                Posició 1: Nom
-                Posició 2: Departament
-                 */
-                String id = rs.getInt("id") + "";
-                String nom = rs.getString("nom");
-                String departament = rs.getString("departament");
+            try (ResultSet rs = stmt.executeQuery(sql)) {
+                //STEP 5: Extract data from result set
+                while (rs.next()) {
+                    /*
+                    Posició 0: ID
+                    Posició 1: Nom
+                    Posició 2: Departament
+                     */
+                    String id = rs.getInt("id") + "";
+                    String nom = rs.getString("nom");
+                    String departament = rs.getString("departament");
 
-                Professor professor = new Professor(id, nom, departament);
+                    Professor professor = new Professor(id, nom, departament);
 
-                llistaEstudiants.add(professor);
+                    llistaEstudiants.add(professor);
+                }
             }
-            rs.close();
-        } catch (SQLException se) {
+        } catch (SQLException | ClassNotFoundException se) {
             //Handle errors for JDBC
-            se.printStackTrace();
-        } catch (Exception e) {
-            //Handle errors for Class.forName
-            e.printStackTrace();
-        } finally {
+
+        } //Handle errors for Class.forName
+        finally {
             //finally block used to close resources
             try {
+                assert conn != null;
                 if (stmt != null) {
                     conn.close();
                 }
@@ -519,7 +517,6 @@ public class basedadesPostgreSQL {
                     conn.close();
                 }
             } catch (SQLException se) {
-                se.printStackTrace();
             }//end finally try
         }//end try      
 
@@ -532,9 +529,9 @@ public class basedadesPostgreSQL {
      *
      * @param DNIestudiant
      * @param idAssignatura
-     * @param curs
      * @param year
      * @param dNota
+     * @return
      */
     public static boolean afegirAvaluacio(String DNIestudiant, int idAssignatura, double dNota, int year) {
         int idEstudiant = obtenirIDEstudiant(DNIestudiant);
@@ -549,7 +546,7 @@ public class basedadesPostgreSQL {
      * @return
      */
     private static int obtenirIDEstudiant(String DNI) {
-        int id=1;
+        int id = 1;
         Connection conn = null;
         Statement stmt = null;
         try {
@@ -565,23 +562,23 @@ public class basedadesPostgreSQL {
             System.out.println("Creating statement...");
             stmt = conn.createStatement();
             String sql = "SELECT id FROM estudiant WHERE dni='" + DNI + "'";
-            ResultSet rs = stmt.executeQuery(sql);
             //STEP 5: Extract data from result set
-            while (rs.next()) {
+            try (ResultSet rs = stmt.executeQuery(sql)) {
+                //STEP 5: Extract data from result set
+                while (rs.next()) {
 
-                id = rs.getInt("id");
+                    id = rs.getInt("id");
 
+                }
             }
-            rs.close();
-        } catch (SQLException se) {
+        } catch (SQLException | ClassNotFoundException se) {
             //Handle errors for JDBC
-            se.printStackTrace();
-        } catch (Exception e) {
-            //Handle errors for Class.forName
-            e.printStackTrace();
-        } finally {
+
+        } //Handle errors for Class.forName
+        finally {
             //finally block used to close resources
             try {
+                assert conn != null;
                 if (stmt != null) {
                     conn.close();
                 }
@@ -592,7 +589,6 @@ public class basedadesPostgreSQL {
                     conn.close();
                 }
             } catch (SQLException se) {
-                se.printStackTrace();
             }//end finally try
         }//end try      
         return id;
@@ -604,6 +600,7 @@ public class basedadesPostgreSQL {
      * @param nom
      * @param credits
      * @param descripcio
+     * @return
      */
     public static boolean afegirAssignatura(String nom, String credits, String descripcio) {
         return executarQuery("INSERT INTO assignatura (nom, credits, descripcio) VALUES ('" + nom + "'," + credits + ",'" + descripcio + "');");
@@ -614,6 +611,7 @@ public class basedadesPostgreSQL {
      *
      * @param nom
      * @param departament
+     * @return
      */
     public static boolean afegirProfessor(String nom, String departament) {
         return executarQuery("INSERT INTO professor (nom, departament) VALUES ('" + nom + "','" + departament + "');");

@@ -134,27 +134,34 @@ public class afegirAlumnesController implements Initializable {
         String sDNI = dni.getText();
         String sAdreca = adreca.getText();
         String database = paginaInicial.getDatabase();
+        boolean correcte = false;
         switch (database) {
             case "H2":
-                basedadesH2.afegirEstudiant(sNomicognoms, sDNI, sAdreca);
+                correcte = basedadesH2.afegirEstudiant(sNomicognoms, sDNI, sAdreca);
                 break;
             case "MySQl":
-                basedadesMysql.afegirEstudiant(sNomicognoms, sDNI, sAdreca);
+                correcte = basedadesMysql.afegirEstudiant(sNomicognoms, sDNI, sAdreca);
                 break;
             case "SqLite":
-                basedadesSqlite.afegirEstudiant(sNomicognoms, sDNI, sAdreca);
+                correcte = basedadesSqlite.afegirEstudiant(sNomicognoms, sDNI, sAdreca);
                 break;
             case "PostgreSQL":
-                basedadesPostgreSQL.afegirEstudiant(sNomicognoms, sDNI, sAdreca);
+                correcte = basedadesPostgreSQL.afegirEstudiant(sNomicognoms, sDNI, sAdreca);
                 break;
             default:
                 throw new AssertionError();
         }
-        Parent llistaAlumnes = FXMLLoader.load(getClass().getResource("sb.fxml"));
-        Scene afegirAlumneScene = new Scene(llistaAlumnes, 1000, 700);
-        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        window.setScene(afegirAlumneScene);
-        window.show();
+        if (correcte) {
+            Parent llistaAlumnes = FXMLLoader.load(getClass().getResource("sb.fxml"));
+            Scene afegirAlumneScene = new Scene(llistaAlumnes, 1000, 700);
+            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            window.setScene(afegirAlumneScene);
+            window.show();
+        } else {
+          
+            afegirAlumneBtn.setDisable(true);
+           
+        }
 
     }
 

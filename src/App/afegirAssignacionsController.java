@@ -20,7 +20,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import java.util.List;
-import javafx.scene.control.TextField;
 
 public class afegirAssignacionsController implements Initializable {
 //    
@@ -98,34 +97,29 @@ public class afegirAssignacionsController implements Initializable {
         int idAssignatura = Integer.parseInt(assignatura);
         int idProfessor = Integer.parseInt(professor);
         String database = paginaInicial.getDatabase();
+        boolean correcte = false;
         switch (database) {
             case "H2":
-                basedadesH2.afegirAssignacio(idProfessor, iCurs, idAssignatura);
+                correcte = basedadesH2.afegirAssignacio(idProfessor, iCurs, idAssignatura);
                 break;
             case "MySQl":
-                basedadesMysql.afegirAssignacio(idProfessor, iCurs, idAssignatura);
+                correcte = basedadesMysql.afegirAssignacio(idProfessor, iCurs, idAssignatura);
                 break;
             case "SqLite":
-                basedadesSqlite.afegirAssignacio(idProfessor, iCurs, idAssignatura);
+                correcte = basedadesSqlite.afegirAssignacio(idProfessor, iCurs, idAssignatura);
                 break;
             case "PostgreSQL":
-                basedadesPostgreSQL.afegirAssignacio(idProfessor, iCurs, idAssignatura);
+                correcte = basedadesPostgreSQL.afegirAssignacio(idProfessor, iCurs, idAssignatura);
                 break;
             default:
                 throw new AssertionError();
         }
-
-
-        changeToAssignacionsScene(event);
-    }
-
-    private boolean isInt(TextField input) {
-        try {
-            int dInput = Integer.parseInt(input.getText());
-            return true;
-        } catch (NumberFormatException e) {
-            return false;
+        if (correcte) {
+            changeToAssignacionsScene(event);
+        } else {
+            afegirAssignacionsBtn.setDisable(true);
         }
+
     }
 
     public void validateInput() {
